@@ -12,12 +12,13 @@ namespace WebClock.Controllers
         [HttpGet]
         public string GetCurrentDate()
         {
-            string json = JsonConvert.SerializeObject(new
+            var now = DateTime.Now;
+            var json = JsonConvert.SerializeObject(new
             {
                 CurrentDate = new Clock() {
-                    Hour = DateTime.Now.Hour, 
-                    Minute = DateTime.Now.Minute,
-                    Second = DateTime.Now.Second 
+                    Hour = now.Hour, 
+                    Minute = now.Minute,
+                    Second = now.Second 
                 }
             });
             return json;
