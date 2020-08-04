@@ -14,7 +14,11 @@ namespace WebClock.Controllers
         {
             string json = JsonConvert.SerializeObject(new
             {
-                CurrentDate = new  {Hour = DateTime.Now.Hour, Minute = DateTime.Now.Minute, Second = DateTime.Now.Second }
+                CurrentDate = new Clock() {
+                    Hour = DateTime.Now.Hour, 
+                    Minute = DateTime.Now.Minute,
+                    Second = DateTime.Now.Second 
+                }
             });
             return json;
 
