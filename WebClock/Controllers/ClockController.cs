@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace WebClock.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class ClockController : Controller
+    [Microsoft.AspNetCore.Mvc.Route("[controller]")]
+    public class ClockController : ControllerBase
     {
         [HttpGet]
-        public JsonResult GetCurrentDate()
+        public string GetCurrentDate()
         {
-            return Json(new {Hour = DateTime.Now.Hour, Minute = DateTime.Now.Minute, Second = DateTime.Now.Second });
+            string json = JsonConvert.SerializeObject(new
+            {
+                CurrentDate = new  {Hour = DateTime.Now.Hour, Minute = DateTime.Now.Minute, Second = DateTime.Now.Second }
+            });
+            return json;
+
         }
     }
 }
