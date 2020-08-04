@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using WebClock.Controllers;
 using Xunit;
 using Newtonsoft.Json;
@@ -11,17 +9,18 @@ namespace WebColock.Tests
     public class ClockControllerTests
     {
         [Fact]
-        public void GetCurrentDate_WhenCalled_ReturnString()
+        public void GetCurrentTime_WhenCalled_ReturnString()
         {
             var clockController = new ClockController();
-            var result = clockController.GetCurrentDate();
+            var result = clockController.GetCurrentTime();
             Assert.IsType<string>(result);
         }
+
         [Fact]
-        public void GetCurrentDate_WhenCalled_ReturnCorrectTime()
+        public void GetCurrentTime_WhenCalled_ReturnCorrectTime()
         {
             var clockController = new ClockController();
-            var result = clockController.GetCurrentDate();
+            var result = clockController.GetCurrentTime();
 
             var currentDate= JsonConvert.DeserializeObject<Clock>(result);
             if (currentDate.Hour==DateTime.Now.Hour&&currentDate.Hour==DateTime.Now.Hour)
