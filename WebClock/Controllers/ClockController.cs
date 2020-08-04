@@ -10,13 +10,13 @@ namespace WebClock.Controllers
     public class ClockController : ControllerBase
     {
         [HttpGet]
-        public int GetCurrentDate()
+        public string GetCurrentDate()
         {
             string json = JsonConvert.SerializeObject(new
             {
                 CurrentDate = new  {Hour = DateTime.Now.Hour, Minute = DateTime.Now.Minute, Second = DateTime.Now.Second }
             });
-            return 2;// json;
+            return json;
 
         }
     }
