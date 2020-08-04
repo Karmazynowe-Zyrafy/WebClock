@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace WebClock.Controllers
 {
@@ -10,9 +9,9 @@ namespace WebClock.Controllers
     public class ClockController : Controller
     {
         [HttpGet]
-        public JsonResult GetActualDate()
+        public JsonResult GetCurrentDate()
         {
-            return Json(new { CurrentDate = DateTime.Now });
+            return Json(new {Hour = DateTime.Now.Hour, Minute = DateTime.Now.Minute, Second = DateTime.Now.Second });
         }
     }
 }
