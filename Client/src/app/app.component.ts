@@ -8,10 +8,13 @@ import {Clock} from './clock.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements  OnInit{
-  clock$: Clock[];
+  clock$: Clock;
   constructor( private  dataService: DataService) {}
 
   ngOnInit() {
+
+    console.log('test1' + this.dataService.getClock()) ;
+
     return this.dataService.getClock().subscribe(data => this.clock$ = data);
   }
 

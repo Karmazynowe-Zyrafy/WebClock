@@ -338,13 +338,12 @@
   </div>
 
   <!-- Resources -->
-  <h2>Resources</h2>
-
-  <ng-container *ngFor='let clocks of clock$'>
-    <h2>AAAAAA</h2>
-    <h1>'G'{{clocks.hour}}</h1>
-  </ng-container>
-  <p>Here are some links to help you get started:</p>
+  <h2>Test Clock</h2>
+<!--<div *ngFor="let clock of clock$">-->
+<!--  <h1>aaa{{clock.second}}</h1>-->
+<!--</div>-->
+  <h2>Godziny: {{clock$.Hour}} Minuty:{{clock$.Minute}} Sekundy:{{clock$.Second}} </h2>
+  <p>Test testy testy</p>
 
   <div class="card-container">
     <a class="card" target="_blank" rel="noopener" href="https://angular.io/tutorial">
