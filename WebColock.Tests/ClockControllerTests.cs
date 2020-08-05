@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.VisualBasic;
 using WebClock.Controllers;
 using Xunit;
 using Newtonsoft.Json;
@@ -27,10 +28,17 @@ namespace WebColock.Tests
         public void GetCurrentTime_WhenCalled_ReturnCorrectSecond()
         {
             var result = _controller.GetCurrentTime();
-
             var currentDate = JsonConvert.DeserializeObject<Clock>(result);
 
-            Assert.InRange(DateTime.Now.Second, currentDate.Second - 15, currentDate.Second + 15);
+            DateTime dt = new DateTime(
+                DateTime.Now.Year,
+                DateTime.Now.Month,
+                DateTime.Now.Day,
+                currentDate.Hour,
+                currentDate.Minute,
+                currentDate.Second);
+
+            Assert.InRange(DateTime.Now, dt.AddSeconds(-15), dt.AddSeconds(15));
 
         }
 
