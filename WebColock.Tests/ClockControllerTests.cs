@@ -17,16 +17,15 @@ namespace WebColock.Tests
         }
 
         [Fact]
-        public void GetCurrentTime_WhenCalled_ReturnCorrectTime()
+        public void GetCurrentTime_WhenCalled_ReturnCorrectSecond()
         {
             var clockController = new ClockController();
             var result = clockController.GetCurrentTime();
 
             var currentDate= JsonConvert.DeserializeObject<Clock>(result);
-            if (currentDate.Hour==DateTime.Now.Hour&&currentDate.Hour==DateTime.Now.Hour)
-            {
+          
                 Assert.InRange(DateTime.Now.Second,currentDate.Second-15,currentDate.Second+15);
-            }
+            
         }
     }
 }
