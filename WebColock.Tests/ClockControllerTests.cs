@@ -28,10 +28,10 @@ namespace WebColock.Tests
         {
             var result = _controller.GetCurrentTime();
 
-            var currentDate= JsonConvert.DeserializeObject<Clock>(result);
-          
-                Assert.InRange(DateTime.Now.Second,currentDate.Second-15,currentDate.Second+15);
-            
+            var currentDate = JsonConvert.DeserializeObject<Clock>(result);
+
+            Assert.InRange(DateTime.Now.Second, currentDate.Second - 15, currentDate.Second + 15);
+
         }
 
         [Fact]
@@ -41,9 +41,9 @@ namespace WebColock.Tests
 
             var currentDate = JsonConvert.DeserializeObject<Clock>(result);
 
-            Assert.InRange(currentDate.Hour, 0,23);
-            Assert.InRange(currentDate.Minute, 0,59);
-            Assert.InRange(currentDate.Second, 0,59);
+            Assert.InRange(currentDate.Hour, 0, 23);
+            Assert.InRange(currentDate.Minute, 0, 59);
+            Assert.InRange(currentDate.Second, 0, 59);
         }
     }
 }
