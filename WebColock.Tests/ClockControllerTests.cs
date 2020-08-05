@@ -41,9 +41,9 @@ namespace WebColock.Tests
 
             var currentDate = JsonConvert.DeserializeObject<Clock>(result);
 
-            Assert.InRange(DateTime.Now.Hour, 0,23);
-            Assert.InRange(DateTime.Now.Minute, 0,59);
-            Assert.InRange(DateTime.Now.Second, 0,59);
+            Assert.InRange(currentDate.Hour, 0,23);
+            Assert.InRange(currentDate.Minute, 0,59);
+            Assert.InRange(currentDate.Second, 0,59);
         }
     }
 }
