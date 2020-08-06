@@ -28,7 +28,7 @@ namespace WebColock.Tests
         {
             var result = await Client.GetAsync(path);
             var content = await result.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(content);
+            return JsonConvert.DeserializeObject<T>(content);
         }
     }
 }
