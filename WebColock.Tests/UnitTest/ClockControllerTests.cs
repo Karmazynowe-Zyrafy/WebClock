@@ -22,6 +22,7 @@ namespace WebColock.Tests
         public void GetCurrentTime_WhenCalled_ReturnString()
         {
             var result = _controller.GetCurrentTime();
+            result.Should().BeOfType<string>();
             result.Should().StartWith("{\"Hour\":").And.EndWith("}");
         }
 
