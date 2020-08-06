@@ -49,9 +49,10 @@ namespace WebColock.Tests
 
             var currentDate = JsonConvert.DeserializeObject<Clock>(result);
 
-            Assert.InRange(currentDate.Hour, 0, 23);
-            Assert.InRange(currentDate.Minute, 0, 59);
-            Assert.InRange(currentDate.Second, 0, 59);
+
+            currentDate.Hour.Should().BeGreaterThan(0).And.BeLessThan(23);
+            currentDate.Minute.Should().BeGreaterThan(0).And.BeLessThan(59);
+            currentDate.Second.Should().BeGreaterThan(0).And.BeLessThan(59);
         }
     }
 }
