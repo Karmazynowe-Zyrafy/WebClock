@@ -3,6 +3,8 @@ using WebClock.Controllers;
 using Xunit;
 using Newtonsoft.Json;
 using WebClock;
+using FluentAssertions;
+using FluentAssertions.Extensions;
 
 namespace WebColock.Tests
 {
@@ -20,7 +22,7 @@ namespace WebColock.Tests
         public void GetCurrentTime_WhenCalled_ReturnString()
         {
             var result = _controller.GetCurrentTime();
-            Assert.IsType<string>(result);
+            result.Should().StartWith("{\"Hour\":").And.EndWith("}");
         }
 
         [Fact]
@@ -29,15 +31,10 @@ namespace WebColock.Tests
             var result = _controller.GetCurrentTime();
             var currentDate = JsonConvert.DeserializeObject<Clock>(result);
 
-            DateTime dt = new DateTime(
-                DateTime.Now.Year,
-                DateTime.Now.Month,
-                DateTime.Now.Day,
-                currentDate.Hour,
-                currentDate.Minute,
-                currentDate.Second);
+            var timeSpanNow = DateTime.Now.TimeOfDay;
 
-            Assert.InRange(DateTime.Now, dt.AddSeconds(-15), dt.AddSeconds(15));
+            timeSpanNow.Should().BeCloseTo(
+                new TimeSpan(currentDate.Hour, currentDate.Minute, currentDate.Second), 15.Seconds());
 
         }
 
@@ -48,9 +45,10 @@ namespace WebColock.Tests
 
             var currentDate = JsonConvert.DeserializeObject<Clock>(result);
 
-            Assert.InRange(currentDate.Hour, 0, 23);
-            Assert.InRange(currentDate.Minute, 0, 59);
-            Assert.InRange(currentDate.Second, 0, 59);
+
+            currentDate.Hour.Should().BeGreaterThan(0).And.BeLessThan(23);
+            currentDate.Minute.Should().BeGreaterThan(0).And.BeLessThan(59);
+            currentDate.Second.Should().BeGreaterThan(0).And.BeLessThan(59);
         }
     }
 }
