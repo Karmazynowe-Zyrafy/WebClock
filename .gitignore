@@ -158,4 +158,4 @@ _NCrunch*
 # Local History for Visual Studio Code
 .history/
 
-\.vs\WebClock\v16\TestStore\0\000.testlog
+*.testlog
