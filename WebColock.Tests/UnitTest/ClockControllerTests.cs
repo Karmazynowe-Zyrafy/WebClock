@@ -3,6 +3,7 @@ using WebClock.Controllers;
 using Xunit;
 using Newtonsoft.Json;
 using WebClock;
+using FluentAssertions;
 
 namespace WebColock.Tests
 {
@@ -20,7 +21,7 @@ namespace WebColock.Tests
         public void GetCurrentTime_WhenCalled_ReturnString()
         {
             var result = _controller.GetCurrentTime();
-            Assert.IsType<string>(result);
+            result.Should().StartWith("{\"Hour\":").And.EndWith("}");
         }
 
         [Fact]
