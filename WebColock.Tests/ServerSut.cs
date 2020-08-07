@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using WebClock;
+using Xunit;
 
 namespace WebColock.Tests
 {
@@ -29,6 +32,12 @@ namespace WebColock.Tests
             var result = await Client.GetAsync(path);
             var content = await result.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(content);
+        }
+
+        public async Task<HttpStatusCode> DoPost(string path, HttpContent httpContent)
+        {
+            var result = await Client.PostAsync(path, httpContent);
+            return result.StatusCode;
         }
     }
 }
