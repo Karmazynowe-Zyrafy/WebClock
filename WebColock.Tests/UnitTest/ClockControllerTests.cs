@@ -30,7 +30,7 @@ namespace WebColock.Tests
         public void GetCurrentTime_WhenCalled_ReturnCorrectSecond()
         {
             var result = _controller.GetCurrentTime();
-            var currentDate = JsonConvert.DeserializeObject<Clock>(result);
+            var timeFromController = JsonConvert.DeserializeObject<Clock>(result);
 
             var timeSpanNow = DateTime.Now.TimeOfDay;
 
