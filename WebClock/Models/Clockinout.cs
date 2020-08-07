@@ -3,7 +3,7 @@
 
 namespace WebClock.Models
 {
-    public class Clockout
+    public class ClockInOut
     {
         public int UserId { get; set; }
         public DateTime ClockoutTime { get; set; }
