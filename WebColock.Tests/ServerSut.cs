@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using WebClock;
-using Xunit;
 
 namespace WebColock.Tests
 {
@@ -34,10 +32,23 @@ namespace WebColock.Tests
             return JsonConvert.DeserializeObject<T>(content);
         }
 
-        public async Task<HttpStatusCode> DoPost(string path, HttpContent httpContent)
+        public async Task<string> DoPost<T>(string path, T content) //Może będzie Task<T> 
         {
-            var result = await Client.PostAsync(path, httpContent);
-            return result.StatusCode;
+            var jsonString = JsonConvert.SerializeObject(content);
+            var stringContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
+
+            var result = await Client.PostAsync(path, stringContent);
+
+            try
+            {
+                result.StatusCode.Should().BeOfType<OkResult>();
+                return await result.Content.ReadAsStringAsync();    //to jest źle
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }
