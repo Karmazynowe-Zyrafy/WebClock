@@ -38,11 +38,10 @@ namespace WebColock.Tests
             var stringContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
             var result = await Client.PostAsync(path, stringContent);
-
             try
             {
-                result.StatusCode.Should().BeOfType<OkResult>();
-                return await result.Content.ReadAsStringAsync();    //to jest źle
+                result.StatusCode.Should().Be(200);
+                return await result.Content.ReadAsStringAsync();   //to jest źle
             }
             catch (Exception e)
             {
