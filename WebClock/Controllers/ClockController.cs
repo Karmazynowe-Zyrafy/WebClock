@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -21,5 +23,13 @@ namespace WebClock.Controllers
             string json = JsonConvert.SerializeObject(clock);
             return json;
         }
+
+        [HttpPost]
+     
+        public async Task<ActionResult>  ClockInOutRegistration(Object id)
+        {
+           return Ok();
+        }
     }
+    
 }
