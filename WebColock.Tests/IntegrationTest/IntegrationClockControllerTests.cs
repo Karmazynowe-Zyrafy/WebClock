@@ -21,10 +21,10 @@ namespace WebColock.Tests.IntegrationTest
         {
             var server = new ServerSut();
 
-            var result = await server.DoGet<string>("/check");
-
+            var result = await server.DoGet<string>("/check/1");
+          
             result.Should().BeOfType(typeof(string));
-            result.Should().Be("test");
+            result.Should().Be("in");
         }
         
 
