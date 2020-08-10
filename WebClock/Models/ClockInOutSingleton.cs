@@ -38,8 +38,17 @@ namespace WebClock.Models
 
         public void ChangeClockStatus(int id)
         {
-            ClockInOutList.First(x => x.UserId == id).IsClockedIn
-                = !ClockInOutList.First(x => x.UserId == id).IsClockedIn;
+            try
+            {
+                ClockInOutList.First(x => x.UserId == id).IsClockedIn
+                    = !ClockInOutList.First(x => x.UserId == id).IsClockedIn;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            //todo rejestrowanie czasu
         }
     }
 }
