@@ -33,6 +33,13 @@ namespace WebClock.Controllers
             return json;
         }
 
+        [HttpGet]
+        [Route("/check")]
+        public string CheckingRegistration()
+        {
+           return "test";
+        }
+        
         [HttpPost]
         public async Task<ActionResult> ClockInOutRegistration(string UserId)
         {
