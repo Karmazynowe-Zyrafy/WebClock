@@ -38,7 +38,7 @@ namespace WebClock.Controllers
         public string CheckingRegistration(int id)
         {
             var usersFromRepo = _repo.GetClockInOutAllUsers();
-           var data= usersFromRepo.Where(x => x.UserId == id).Select(x=>x.IsClockedIn);
+           var data= usersFromRepo.Where(x => x.UserId == id);
            var temp = data.First();
            return JsonConvert.SerializeObject(temp);
         }

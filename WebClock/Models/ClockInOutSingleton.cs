@@ -10,9 +10,9 @@ namespace WebClock.Models
         private ClockInOutSingleton()
         {
             ClockInOutList = new List<ClockInOut> {
-                new ClockInOut { UserId = 1, ClockoutTime = DateTime.UtcNow, IsClockedIn = true },
-                new ClockInOut { UserId = 2, ClockoutTime = DateTime.UtcNow.AddHours(2), IsClockedIn = false },
-                new ClockInOut { UserId = 3, ClockoutTime = DateTime.UtcNow.AddHours(4), IsClockedIn = true }
+                new ClockInOut { UserId = 1, ClockInTimes =new List<DateTime>(){DateTime.UtcNow.AddHours(-2)},ClockOutTimes = new List<DateTime>(),IsClockedIn = true },
+                new ClockInOut { UserId = 2, ClockInTimes = new List<DateTime>(), IsClockedIn = false },
+                new ClockInOut { UserId = 3, ClockInTimes =new List<DateTime>(){DateTime.UtcNow.AddHours(-4)}, IsClockedIn = true }
             };
         }
 
