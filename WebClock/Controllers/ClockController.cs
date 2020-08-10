@@ -37,8 +37,8 @@ namespace WebClock.Controllers
         [Route("/check/{id}")]
         public string CheckingRegistration(int id)
         {
-            var usersFromRepo = _repo.GetClockInOutSingleton();
-           var data= usersFromRepo.Where(x => x.UserId == id).Select(x=>x.ClockoutStatus);
+            var usersFromRepo = _repo.GetClockInOutAllUsers();
+           var data= usersFromRepo.Where(x => x.UserId == id).Select(x=>x.IsClockedIn);
            var temp = data.First();
            return JsonConvert.SerializeObject(temp);
         }
