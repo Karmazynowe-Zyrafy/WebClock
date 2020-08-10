@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WebClock.Models
 {
@@ -37,7 +38,8 @@ namespace WebClock.Models
 
         public void ChangeClockStatus(int id)
         {
-            throw new NotImplementedException();
+            ClockInOutList.First(x => x.UserId == id).IsClockedIn
+                = !ClockInOutList.First(x => x.UserId == id).IsClockedIn;
         }
     }
 }
