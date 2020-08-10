@@ -35,12 +35,20 @@ namespace WebClock.Controllers
 
         [HttpGet]
         [Route("/check/{id}")]
-        public string CheckingRegistration(int id)
+        public  IActionResult CheckingRegistration(int id)
         {
-            var usersFromRepo = _repo.GetClockInOutAllUsers();
-           var data= usersFromRepo.Where(x => x.UserId == id);
-           var temp = data.First();
-           return JsonConvert.SerializeObject(temp);
+            try
+            {
+                var usersFromRepo = _repo.GetClockInOutAllUsers();
+                var data= usersFromRepo.Where(x => x.UserId == id);
+                var temp = data.First();
+                return Ok(JsonConvert.SerializeObject(temp));
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+          
         }
 
         [HttpPost]
