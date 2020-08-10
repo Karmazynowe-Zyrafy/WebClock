@@ -26,7 +26,5 @@ namespace WebColock.Tests.IntegrationTest
             result.Should().BeOfType(typeof(string));
             result.Should().Be("in");
         }
-        
-
     }
 }
