@@ -16,7 +16,7 @@ namespace WebClock.Controllers
         private readonly ClockInOutSingleton _repo;
         public ClockController()
         {
-           _repo = ClockInOutSingleton.Instance;
+            _repo = ClockInOutSingleton.Instance;
         }
 
         [HttpGet]
@@ -34,10 +34,13 @@ namespace WebClock.Controllers
         }
 
         [HttpGet]
-        [Route("/check")]
-        public string CheckingRegistration()
+        [Route("/check/{id}")]
+        public string CheckingRegistration(int id)
         {
-            return "test";
+            var usersFromRepo = _repo.GetClockInOutSingleton();
+           var data= usersFromRepo.Where(x => x.UserId == id).Select(x=>x.ClockoutStatus);
+           var temp = data.First();
+           return JsonConvert.SerializeObject(temp);
         }
 
         [HttpPost]
