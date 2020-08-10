@@ -11,10 +11,11 @@ namespace WebColock.Tests.IntegrationTest
         {
             var server = new ServerSut();
 
-            var result = await server.DoPost("/clock", new { Id = 1 });
+            var result = await server.DoPost("/clock", new { UserId = 1 });
 
             result.Should().BeOfType(typeof(string));
         }
+
         [Fact]
         public async void TestCheckingRegistration()
         {

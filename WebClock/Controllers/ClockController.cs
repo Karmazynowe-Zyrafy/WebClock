@@ -13,10 +13,10 @@ namespace WebClock.Controllers
     [Route("[controller]")]
     public class ClockController : ControllerBase
     {
-        private readonly List<ClockInOut> _repo;
+        private readonly ClockInOutSingleton _repo;
         public ClockController()
         {
-            _repo = ClockInOutSingleton.Instance.GetClockInOutSingleton();
+           _repo = ClockInOutSingleton.Instance;
         }
 
         [HttpGet]
@@ -37,31 +37,21 @@ namespace WebClock.Controllers
         [Route("/check")]
         public string CheckingRegistration()
         {
-           return "test";
+            return "test";
         }
-        
+
         [HttpPost]
-        public async Task<ActionResult> ClockInOutRegistration(string UserId)
+        public async Task<ActionResult> ClockInOutRegistration(Object userId)
         {
             try
             {
-                if (UserId == null)
+                if (userId == null)
                 {
                     return BadRequest();
                 }
+                var currentUser = JsonConvert.DeserializeObject<ClockInOut>(userId.ToString());
 
-                var currentUser = JsonConvert.DeserializeObject<ClockInOut>(UserId);
-                var usersFromRepo = _repo.GetClockInOutSingleton();
-                var user = usersFromRepo.First(id => id.UserId == currentUser.UserId);
-
-                if (user.ClockoutStatus == "in")
-                {
-                    //zamień na out i przypisz datę
-                }
-                else
-                {
-                    //zamień na in i przypisz datę
-                }
+                _repo.ChangeClockStatus(currentUser.UserId);
 
                 return Ok();
             }

@@ -41,7 +41,7 @@ namespace WebColock.Tests
             try
             {
                 result.StatusCode.Should().Be(200);
-                return await result.Content.ReadAsStringAsync();   //to jest źle
+                return await result.Content.ReadAsStringAsync();
             }
             catch (Exception e)
             {
