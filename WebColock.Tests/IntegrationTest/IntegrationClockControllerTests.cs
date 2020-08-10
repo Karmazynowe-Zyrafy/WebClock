@@ -27,12 +27,6 @@ namespace WebColock.Tests.IntegrationTest
             var result = await server.DoGet<ClockInOut>("/check/1");
 
             result.Should().BeOfType(typeof(ClockInOut));
-            result.UserId.Should().Be(1);
-            result.ClockInTimes.Should().BeOfType(typeof(List<DateTime>));
-            result.ClockOutTimes.Should().BeOfType(typeof(List<DateTime>));
-            result.IsClockedIn.Should().Be(true);
-            
-
         }
     }
 }
