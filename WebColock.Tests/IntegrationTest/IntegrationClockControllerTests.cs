@@ -1,5 +1,8 @@
-﻿using FluentAssertions;
+﻿using System;
+using System.Collections.Generic;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using WebClock.Models;
 using Xunit;
 
 namespace WebColock.Tests.IntegrationTest
@@ -21,10 +24,15 @@ namespace WebColock.Tests.IntegrationTest
         {
             var server = new ServerSut();
 
-            var result = await server.DoGet<bool>("/check/1");
+            var result = await server.DoGet<ClockInOut>("/check/1");
 
-            result.Should().Be(true);
-     
+            result.Should().BeOfType(typeof(ClockInOut));
+            result.UserId.Should().Be(1);
+            result.ClockInTimes.Should().BeOfType(typeof(List<DateTime>));
+            result.ClockOutTimes.Should().BeOfType(typeof(List<DateTime>));
+            result.IsClockedIn.Should().Be(true);
+            
+
         }
     }
 }
