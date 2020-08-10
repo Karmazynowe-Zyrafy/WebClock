@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using FluentAssertions;
 using WebClock.Models;
@@ -9,18 +10,24 @@ namespace WebColock.Tests.Model
 {
     public class ClockInOutSingletonTests
     {
-      //  private readonly ClockController _controller;
-
-        public ClockInOutSingletonTests()
-        {
-            
-        }
-
         [Fact]
-        public void ChangeClockStatus_WhenCalled_ChangeIsClockedInProperty()
+        public void ChangeClockStatus_WhenCalled_PropertyIsClockedIsOpposite()
         {
-            var lista = ClockInOutSingleton.Instance.GetClockInOutAllUsers();
-        }
+            int userId = 1;
 
+            var isClockedInBeforeChange =
+            ClockInOutSingleton.Instance.GetClockInOutAllUsers()
+                .First(id => id.UserId == userId)
+                .IsClockedIn;
+
+            ClockInOutSingleton.Instance.ChangeClockStatus(userId);
+
+            var isClockedInAfterChange
+                = ClockInOutSingleton.Instance.GetClockInOutAllUsers()
+                .First(id => id.UserId == userId)
+                .IsClockedIn;
+
+            isClockedInAfterChange.Should().Be(!isClockedInBeforeChange);
+        }
     }
 }
