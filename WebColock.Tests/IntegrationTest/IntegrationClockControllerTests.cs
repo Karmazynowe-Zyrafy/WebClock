@@ -16,13 +16,14 @@ namespace WebColock.Tests.IntegrationTest
             result.Should().BeOfType(typeof(string));
         }
         [Fact]
-        public async void CheckingRegistration()
+        public async void TestCheckingRegistration()
         {
             var server = new ServerSut();
 
-            var result = await server.DoGet<string>("/clock/check");
+            var result = await server.DoGet<string>("/check");
 
             result.Should().BeOfType(typeof(string));
+            result.Should().Be("test");
         }
         
 
