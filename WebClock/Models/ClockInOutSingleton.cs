@@ -10,13 +10,13 @@ namespace WebClock.Models
         private ClockInOutSingleton()
         {
             ClockInOutList = new List<ClockInOut> {
-                new ClockInOut { UserId = 1, ClockoutTime = DateTime.UtcNow, ClockoutStatus = "in" },
-                new ClockInOut { UserId = 2, ClockoutTime = DateTime.UtcNow.AddHours(2), ClockoutStatus = "out" },
-                new ClockInOut { UserId = 3, ClockoutTime = DateTime.UtcNow.AddHours(4), ClockoutStatus = "in" }
+                new ClockInOut { UserId = 1, ClockoutTime = DateTime.UtcNow, IsClockedIn = true },
+                new ClockInOut { UserId = 2, ClockoutTime = DateTime.UtcNow.AddHours(2), IsClockedIn = false },
+                new ClockInOut { UserId = 3, ClockoutTime = DateTime.UtcNow.AddHours(4), IsClockedIn = true }
             };
         }
 
-        public static List<ClockInOut> ClockInOutList;
+        private static List<ClockInOut> ClockInOutList { get; set; }
 
         public static ClockInOutSingleton Instance
         {
@@ -30,15 +30,14 @@ namespace WebClock.Models
             }
         }
 
-        public List<ClockInOut> GetClockInOutSingleton()
+        public List<ClockInOut> GetClockInOutAllUsers()
         {
             return ClockInOutList;
         }
-        
-        public List<ClockInOut> ChangeClockStatus(int id)
+
+        public void ChangeClockStatus(int id)
         {
-            //todo
-            return ClockInOutList;
+            throw new NotImplementedException();
         }
     }
 }
