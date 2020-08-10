@@ -38,13 +38,13 @@ namespace WebClock.Controllers
         public string CheckingRegistration(int id)
         {
             var usersFromRepo = _repo.GetClockInOutAllUsers();
-           var data= usersFromRepo.Where(x => x.UserId == id);
-           var temp = data.First();
-           return JsonConvert.SerializeObject(temp);
+            var data = usersFromRepo.Where(x => x.UserId == id);
+            var temp = data.First();
+            return JsonConvert.SerializeObject(temp);
         }
 
         [HttpPost]
-        public async Task<ActionResult> ClockInOutRegistration(Object userId)
+        public ActionResult ClockInOutRegistration(Object userId)
         {
             try
             {
@@ -55,14 +55,12 @@ namespace WebClock.Controllers
                 var currentUser = JsonConvert.DeserializeObject<ClockInOut>(userId.ToString());
 
                 _repo.ChangeClockStatus(currentUser.UserId);
-
-                return Ok();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error creating data from the database");
+                return StatusCode(StatusCodes.Status500InternalServerError, e);
             }
+            return Ok();
         }
     }
 }
