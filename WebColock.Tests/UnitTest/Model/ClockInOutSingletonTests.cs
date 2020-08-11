@@ -48,5 +48,16 @@ namespace WebColock.Tests.Model
 
             ModifiedList.Should().BeGreaterThan(EmptyList);
         }
+
+        [Fact]
+        public void AnotherParalellTest()
+        {
+            System.Threading.Thread.Sleep(2000);
+            var clockInOutAllUsers = ClockInOutSingleton.Instance.GetClockInOutAllUsers();
+            var allClockInOutCounter =
+                clockInOutAllUsers.Sum(c => c.ClockInTimes?.Count ?? 0
+                                            + c.ClockOutTimes?.Count ?? 0);
+            allClockInOutCounter.Should().Be(2);
+        }
     }
 }
