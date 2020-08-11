@@ -29,5 +29,24 @@ namespace WebColock.Tests.Model
 
             isClockedInAfterChange.Should().Be(!isClockedInBeforeChange);
         }
+        [Fact]
+        public void ChangeClockStatus_WhenCalled_DateIsSavedToProperList()
+        {
+            int userId = 1;
+
+            var EmptyList =
+            ClockInOutSingleton.Instance.GetClockInOutAllUsers()
+                .First(id => id.UserId == userId)
+                .ClockInTimes.Count;
+
+            ClockInOutSingleton.Instance.ChangeClockStatus(userId);
+
+            var ModifiedList
+                = ClockInOutSingleton.Instance.GetClockInOutAllUsers()
+                .First(id => id.UserId == userId)
+                .ClockInTimes.Count;
+
+            ModifiedList.Should().BeGreaterThan(EmptyList);
+        }
     }
 }

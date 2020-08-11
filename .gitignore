@@ -195,3 +195,4 @@ baseline.json
 .history/
 
 *.testlog
+/.vs/ProjectSettings.json

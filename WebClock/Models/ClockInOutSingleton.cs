@@ -42,13 +42,21 @@ namespace WebClock.Models
             {
                 ClockInOutList.First(x => x.UserId == id).IsClockedIn
                     = !ClockInOutList.First(x => x.UserId == id).IsClockedIn;
+                if (ClockInOutList.First(x => x.UserId == id).IsClockedIn == false)
+                {
+                    ClockInOutList.First(x => x.UserId == id).ClockOutTimes.Add(DateTime.Now);
+                }
+                else
+                {
+                    ClockInOutList.First(x => x.UserId == id).ClockInTimes.Add(DateTime.Now);
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
             }
-            //todo rejestrowanie czasu
+
         }
     }
 }
