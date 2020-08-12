@@ -29,9 +29,9 @@ namespace WebClock.Controllers
 
         // GET: api/ClockInOutDatabases/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ClockInOutDatabase>> GetClockInOutDatabase(int id)
+        public async Task<ActionResult<IEnumerable<ClockInOutDatabase>>> GetClockInOutDatabase(int id)
         {
-            var clockInOutDatabase = await _context.clockInOut.FindAsync(id);
+            var clockInOutDatabase = await _context.clockInOut.Where(x => x.UserId == id).ToListAsync();
 
             if (clockInOutDatabase == null)
             {
