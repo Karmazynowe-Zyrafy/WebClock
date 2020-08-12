@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using WebClock.Models;
 
 namespace WebClock.Controllers
 {
@@ -8,6 +13,12 @@ namespace WebClock.Controllers
     [Route("[controller]")]
     public class ClockController : ControllerBase
     {
+        private readonly ClockInOutSingleton _repo;
+        public ClockController()
+        {
+            _repo = ClockInOutSingleton.Instance;
+        }
+
         [HttpGet]
         public string GetCurrentTime()
         {
@@ -20,6 +31,46 @@ namespace WebClock.Controllers
             };
             string json = JsonConvert.SerializeObject(clock);
             return json;
+        }
+
+        [HttpGet]
+        [Route("/check/{id}")]
+        public  IActionResult CheckingRegistration(int id)
+        {
+            try
+            {
+                var usersFromRepo = _repo.GetClockInOutAllUsers();
+                var data= usersFromRepo.Where(x => x.UserId == id);
+                var temp = data.First();
+                return Ok(JsonConvert.SerializeObject(temp));
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+          
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ClockInOutRegistration(Object userId)
+        {
+            try
+            {
+                if (userId == null)
+                {
+                    return BadRequest();
+                }
+                var currentUser = JsonConvert.DeserializeObject<ClockInOut>(userId.ToString());
+
+                _repo.ChangeClockStatus(currentUser.UserId);
+
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error creating data from the database");
+            }
         }
     }
 }
