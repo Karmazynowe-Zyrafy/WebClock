@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebClock", "WebClock\WebClock.csproj", "{9D88DB8B-575C-4983-BA56-B75BA150DFF1}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClock", "WebClock\WebClock.csproj", "{9D88DB8B-575C-4983-BA56-B75BA150DFF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebColock.Tests", "WebColock.Tests\WebColock.Tests.csproj", "{7C01CB16-C42A-403F-97A6-680CDB78234A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,15 @@ Global
 		{9D88DB8B-575C-4983-BA56-B75BA150DFF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D88DB8B-575C-4983-BA56-B75BA150DFF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D88DB8B-575C-4983-BA56-B75BA150DFF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C01CB16-C42A-403F-97A6-680CDB78234A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C01CB16-C42A-403F-97A6-680CDB78234A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C01CB16-C42A-403F-97A6-680CDB78234A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C01CB16-C42A-403F-97A6-680CDB78234A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53FCF32B-91FA-47C9-AC69-73214416BD28}
 	EndGlobalSection
 EndGlobal
