@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WebClock.Models;
 
 namespace WebClock
 {
@@ -33,6 +35,8 @@ namespace WebClock
                     builder => { builder.WithOrigins("http://localhost:4200"); });
             });
             services.AddControllers();
+            services.AddDbContext<ClockinoutContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
