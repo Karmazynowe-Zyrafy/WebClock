@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using WebClock.Models;
 
 namespace WebClock.Controllers
@@ -73,15 +74,15 @@ namespace WebClock.Controllers
             return NoContent();
         }
 
-        // POST: api/ClockInOutDatabases
+        // POST: api/ClockInOutDatabases/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<ClockInOutDatabase>> PostClockInOutDatabase(ClockInOutDatabase clockInOutDatabase)
+        [HttpPost("{id}")]
+        public async Task<ActionResult<ClockInOutDatabase>> PostClockInOutDatabase(int id)
         {
+            ClockInOutDatabase clockInOutDatabase = new ClockInOutDatabase { UserId = id, ClockoutTime = DateTime.Now };// database freaks out if you post with only one variable in it
             _context.clockInOut.Add(clockInOutDatabase);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetClockInOutDatabase", new { id = clockInOutDatabase.Clockinout_Id }, clockInOutDatabase);
         }
 
