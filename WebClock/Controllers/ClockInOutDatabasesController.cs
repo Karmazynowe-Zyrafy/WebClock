@@ -80,7 +80,18 @@ namespace WebClock.Controllers
         [HttpPost("{id}")]
         public async Task<ActionResult<ClockInOutDatabase>> PostClockInOutDatabase(int id)
         {
-            ClockInOutDatabase clockInOutDatabase = new ClockInOutDatabase { UserId = id, ClockoutTime = DateTime.Now };// database freaks out if you post with only one variable in it
+            ClockInOutDatabase clockInOutDatabase = new ClockInOutDatabase { UserId = id, IsDeleted = false };// database freaks out if you post with only one variable in it
+            _context.clockInOut.Add(clockInOutDatabase);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetClockInOutDatabase", new { id = clockInOutDatabase.Clockinout_Id }, clockInOutDatabase);
+        }
+
+        // POST: api/ClockInOutDatabases/
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        public async Task<ActionResult<ClockInOutDatabase>> PostClockInOutDatabase(ClockInOutDatabase clockInOutDatabase)
+        {
             _context.clockInOut.Add(clockInOutDatabase);
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetClockInOutDatabase", new { id = clockInOutDatabase.Clockinout_Id }, clockInOutDatabase);

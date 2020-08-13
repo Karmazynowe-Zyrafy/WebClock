@@ -14,5 +14,6 @@ namespace WebClock.Models
         public int UserId { get; set; }
         public DateTime ClockoutTime { get; set; }
         public bool IsClockedIn { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
