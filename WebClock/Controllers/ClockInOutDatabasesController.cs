@@ -74,13 +74,26 @@ namespace WebClock.Controllers
             return NoContent();
         }
 
-        // POST: api/ClockInOutDatabases/5
+        // POST: api/ClockInOutDatabases/ClockIn/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost("{id}")]
-        public async Task<ActionResult<ClockInOutDatabase>> PostClockInOutDatabase(int id)
+        [HttpPost]
+        [Route("api/ClockInOutDatabases/ClockIn/{id}")]
+        public async Task<ActionResult<ClockInOutDatabase>> PostClockInOutDatabase_ClockIn(int id)
         {
-            ClockInOutDatabase clockInOutDatabase = new ClockInOutDatabase { UserId = id, IsDeleted = false };// database freaks out if you post with only one variable in it
+            ClockInOutDatabase clockInOutDatabase = new ClockInOutDatabase { UserId = id,ClockoutTime=DateTime.UtcNow,IsClockedIn=true, IsDeleted = false };// database freaks out if you post with only one variable in it
+            _context.clockInOut.Add(clockInOutDatabase);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetClockInOutDatabase", new { id = clockInOutDatabase.Clockinout_Id }, clockInOutDatabase);
+        }
+        // POST: api/ClockInOutDatabases/ClockOut/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        [Route("api/ClockInOutDatabases/ClockOut/{id}")]
+        public async Task<ActionResult<ClockInOutDatabase>> PostClockInOutDatabase_ClockOut(int id)
+        {
+            ClockInOutDatabase clockInOutDatabase = new ClockInOutDatabase { UserId = id, ClockoutTime = DateTime.UtcNow, IsClockedIn = false, IsDeleted = false };// database freaks out if you post with only one variable in it
             _context.clockInOut.Add(clockInOutDatabase);
             await _context.SaveChangesAsync();
             return CreatedAtAction("GetClockInOutDatabase", new { id = clockInOutDatabase.Clockinout_Id }, clockInOutDatabase);
@@ -106,8 +119,10 @@ namespace WebClock.Controllers
             {
                 return NotFound();
             }
+            clockInOutDatabase.IsDeleted = true;
+            _context.Entry(clockInOutDatabase).State = EntityState.Modified;
 
-            _context.clockInOut.Remove(clockInOutDatabase);
+            //_context.clockInOut.Remove(clockInOutDatabase);
             await _context.SaveChangesAsync();
 
             return clockInOutDatabase;
