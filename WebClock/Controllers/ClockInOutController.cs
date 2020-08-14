@@ -14,19 +14,19 @@ namespace WebClock.Controllers
     [Route("api/[controller]")]
     public class ClockInOutController : ControllerBase
     {
-        private readonly ClockinoutContext _context;
+        private Repository _repository;
 
         public ClockInOutController(ClockinoutContext context)
         {
-            _context = context;
+            _repository = new Repository(context);
         }
 
         // GET: api/ClocksInOut
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ClockInOutDatabase>>> GetClocksInOut()
-        {
-            return await _context.ClockInOut.ToListAsync();
-        }
+        //[HttpGet]
+        // public async Task<ActionResult<IEnumerable<ClockInOutDatabase>>> GetClocksInOut()
+        // {
+        //     return await _repository.ClockInOut.ToListAsync();
+        // }
 
         //        // GET: api/ClockInOut/5
         //        [HttpGet("{id}")]
@@ -71,30 +71,41 @@ namespace WebClock.Controllers
         // POST: api/ClockInOut/ClockIn/5
         [HttpPost]
         [Route("ClockIn/{id}")]
-        public async Task<ActionResult<ClockInOutDatabase>> PostClockInOutDatabase_ClockIn(int id)
+        public  void ClockIn(int id)
         {
-
-
-            ClockInOutDatabase clockInOutDatabase =
-                new ClockInOutDatabase
-                {
-                    UserId = id,
-                    ClockoutTime = DateTime.UtcNow,
-                    IsClockedIn = true,
-                    IsDeleted = false
-                };
-            // database freaks out if you post with only one variable in it
-
-            _context.ClockInOut.Add(clockInOutDatabase);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetClocksInOut",
-                new { id = clockInOutDatabase.Clockinout_Id }, clockInOutDatabase);
+            ClockInOut clockInOut = new ClockInOut {UserId = id, Type = ClockType.In, Date = DateTime.UtcNow};
+            
+            _repository.Write(clockInOut);
         }
 
-        enum ClockType { In, Out };
+        public class Repository
+        {
+            private readonly ClockinoutContext _context;
 
-        class ClockInOut
+            public Repository(ClockinoutContext context)
+            {
+                _context = context;
+            }
+
+            public void Write(ClockInOut clockInOut)
+            {
+                ClockInOutDatabase clockInOutDatabase = new ClockInOutDatabase
+                {
+                    UserId = clockInOut.UserId, Date = clockInOut.Date, Type = clockInOut.Type
+                };
+
+                _context.ClockInOut.Add(clockInOutDatabase);
+                _context.SaveChangesAsync();
+            }
+        }
+
+        public enum ClockType
+        {
+            Out = 0,
+            In = 1
+        };
+
+        public class ClockInOut
         {
             public int UserId { get; set; }
             public ClockType Type { get; set; }
@@ -104,23 +115,18 @@ namespace WebClock.Controllers
         // POST: api/ClockInOutDatabases/ClockOut/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        [Route("api/ClockInOutDatabases/ClockOut/{id}")]
-        public async Task<ActionResult<ClockInOutDatabase>> PostClockInOutDatabase_ClockOut(int id)
-        {
-            ClockInOutDatabase clockInOutDatabase =
-                new ClockInOutDatabase
-                {
-                    UserId = id,
-                    ClockoutTime = DateTime.UtcNow,
-                    IsClockedIn = false,
-                    IsDeleted = false
-                };// database freaks out if you post with only one variable in it
-            _context.ClockInOut.Add(clockInOutDatabase);
-
-            await _context.SaveChangesAsync();
-            return CreatedAtAction("GetClocksInOut", new { id = clockInOutDatabase.Clockinout_Id }, clockInOutDatabase);
-        }
+        // [HttpPost]
+        // [Route("api/ClockInOutDatabases/ClockOut/{id}")]
+        // public async Task<ActionResult<ClockInOutDatabase>> PostClockInOutDatabase_ClockOut(int id)
+        // {
+        //     ClockInOutDatabase clockInOutDatabase = new ClockInOutDatabase
+        //     {
+        //         UserId = id, ClockoutTime = DateTime.UtcNow, IsClockedIn = false, IsDeleted = false
+        //     }; // database freaks out if you post with only one variable in it
+        //     _context.ClockInOut.Add(clockInOutDatabase);
+        //     await _context.SaveChangesAsync();
+        //     return CreatedAtAction("GetClocksInOut", new {id = clockInOutDatabase.Clockinout_Id}, clockInOutDatabase);
+        // }
 
         //        // POST: api/ClockInOutDatabases/
         //        // To protect from overposting attacks, enable the specific properties you want to bind to, for
