@@ -10,6 +10,20 @@ using WebClock.Models;
 
 namespace WebClock.Controllers
 {
+    public static class Extensions
+    {
+        public static ClockInOutController.ClockInOut ToClockIn(this int id)
+        {
+            return new ClockInOutController.ClockInOut
+            {
+                UserId = id,
+                Type = ClockInOutController.ClockType.In,
+                Date = DateTime.UtcNow
+            };
+        }
+    }
+
+
     [ApiController]
     [Route("api/[controller]")]
     public class ClockInOutController : ControllerBase
@@ -71,10 +85,10 @@ namespace WebClock.Controllers
         // POST: api/ClockInOut/ClockIn/5
         [HttpPost]
         [Route("ClockIn/{id}")]
-        public  void ClockIn(int id)
+        public void ClockIn(int id)
         {
-            ClockInOut clockInOut = new ClockInOut {UserId = id, Type = ClockType.In, Date = DateTime.UtcNow};
-            
+            var clockInOut = id.ToClockIn();
+
             _repository.Write(clockInOut);
         }
 
@@ -91,7 +105,9 @@ namespace WebClock.Controllers
             {
                 Models.ClockInOut clockInOutDb = new Models.ClockInOut
                 {
-                    UserId = clockInOut.UserId, Date = clockInOut.Date, Type = clockInOut.Type
+                    UserId = clockInOut.UserId,
+                    Date = clockInOut.Date,
+                    Type = clockInOut.Type
                 };
 
                 _context.ClockInOut.Add(clockInOutDb);
