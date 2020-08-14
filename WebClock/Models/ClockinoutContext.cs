@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace WebClock.Models
 {
-    public class ClockinoutContext : DbContext
+    public class ClockInOutContext : DbContext
     {
-        public ClockinoutContext(DbContextOptions<ClockinoutContext>options):base(options)
+        public ClockInOutContext(DbContextOptions<ClockInOutContext> options) : base(options)
         {
 
         }
-        public DbSet<ClockInOutDatabase> ClockInOut { get; set; }
+        public DbSet<ClockInOut> ClockInOut { get; set; }
     }
 }

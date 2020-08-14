@@ -35,7 +35,7 @@ namespace WebClock
                     builder => { builder.WithOrigins("http://localhost:4200"); });
             });
             services.AddControllers();
-            services.AddDbContext<ClockinoutContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
+            services.AddDbContext<ClockInOutContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
             
         }
 

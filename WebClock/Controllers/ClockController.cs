@@ -9,66 +9,66 @@ using WebClock.Models;
 
 namespace WebClock.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class ClockController : ControllerBase
-    {
-        private readonly ClockInOutSingleton _repo;
-        public ClockController()
-        {
-            _repo = ClockInOutSingleton.Instance;
-        }
+    //[ApiController]
+    //[Route("[controller]")]
+    //public class ClockController : ControllerBase
+    //{
+    //    private readonly ClockInOutSingleton _repo;
+    //    public ClockController()
+    //    {
+    //        _repo = ClockInOutSingleton.Instance;
+    //    }
 
-        [HttpGet]
-        public string GetCurrentTime()
-        {
-            //var currentTime = DateTime.Now;
-            //var clock = new Clock
-            //{
-            //    Time = DateTime.Now
-            //};
-            string json = JsonConvert.SerializeObject(DateTime.Now);
-            return json;
-        }
+    //    [HttpGet]
+    //    public string GetCurrentTime()
+    //    {
+    //        //var currentTime = DateTime.Now;
+    //        //var clock = new Clock
+    //        //{
+    //        //    Time = DateTime.Now
+    //        //};
+    //        string json = JsonConvert.SerializeObject(DateTime.Now);
+    //        return json;
+    //    }
 
-        [HttpGet]
-        [Route("/check/{id}")]
-        public  IActionResult CheckingRegistration(int id)
-        {
-            try
-            {
-                var usersFromRepo = _repo.GetClockInOutAllUsers();
-                var data= usersFromRepo.Where(x => x.UserId == id);
-                var temp = data.First();
-                return Ok(JsonConvert.SerializeObject(temp));
-            }
-            catch (Exception e)
-            {
-                return BadRequest();
-            }
+    //    [HttpGet]
+    //    [Route("/check/{id}")]
+    //    public  IActionResult CheckingRegistration(int id)
+    //    {
+    //        try
+    //        {
+    //            var usersFromRepo = _repo.GetClockInOutAllUsers();
+    //            var data= usersFromRepo.Where(x => x.UserId == id);
+    //            var temp = data.First();
+    //            return Ok(JsonConvert.SerializeObject(temp));
+    //        }
+    //        catch (Exception e)
+    //        {
+    //            return BadRequest();
+    //        }
           
-        }
+    //    }
 
-        [HttpPost]
-        public async Task<ActionResult> ClockInOutRegistration(Object userId)
-        {
-            try
-            {
-                if (userId == null)
-                {
-                    return BadRequest();
-                }
-                var currentUser = JsonConvert.DeserializeObject<ClockInOut>(userId.ToString());
+    //    [HttpPost]
+    //    public async Task<ActionResult> ClockInOutRegistration(Object userId)
+    //    {
+    //        try
+    //        {
+    //            if (userId == null)
+    //            {
+    //                return BadRequest();
+    //            }
+    //            var currentUser = JsonConvert.DeserializeObject<ClockInOut>(userId.ToString());
 
-                _repo.ChangeClockStatus(currentUser.UserId);
+    //            _repo.ChangeClockStatus(currentUser.UserId);
 
-                return Ok();
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Error creating data from the database");
-            }
-        }
-    }
+    //            return Ok();
+    //        }
+    //        catch (Exception)
+    //        {
+    //            return StatusCode(StatusCodes.Status500InternalServerError,
+    //                "Error creating data from the database");
+    //        }
+    //    }
+    //}
 }

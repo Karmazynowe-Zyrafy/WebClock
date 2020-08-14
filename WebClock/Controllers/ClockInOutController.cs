@@ -16,7 +16,7 @@ namespace WebClock.Controllers
     {
         private Repository _repository;
 
-        public ClockInOutController(ClockinoutContext context)
+        public ClockInOutController(ClockInOutContext context)
         {
             _repository = new Repository(context);
         }
@@ -80,22 +80,22 @@ namespace WebClock.Controllers
 
         public class Repository
         {
-            private readonly ClockinoutContext _context;
+            private readonly ClockInOutContext _context;
 
-            public Repository(ClockinoutContext context)
+            public Repository(ClockInOutContext context)
             {
                 _context = context;
             }
 
             public void Write(ClockInOut clockInOut)
             {
-                ClockInOutDatabase clockInOutDatabase = new ClockInOutDatabase
+                Models.ClockInOut clockInOutDb = new Models.ClockInOut
                 {
                     UserId = clockInOut.UserId, Date = clockInOut.Date, Type = clockInOut.Type
                 };
 
-                _context.ClockInOut.Add(clockInOutDatabase);
-                _context.SaveChangesAsync();
+                _context.ClockInOut.Add(clockInOutDb);
+                _context.SaveChanges();
             }
         }
 
