@@ -12,6 +12,6 @@ namespace WebClock.Models
         {
 
         }
-        public DbSet<ClockInOutDatabase> clockInOut { get; set; }
+        public DbSet<ClockInOutDatabase> ClockInOut { get; set; }
     }
 }
