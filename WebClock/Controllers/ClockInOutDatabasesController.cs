@@ -78,7 +78,7 @@ namespace WebClock.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        [Route("api/ClockInOutDatabases/ClockIn/{id}")]
+        [Route("ClockIn/{id}")]
         public async Task<ActionResult<ClockInOutDatabase>> PostClockInOutDatabase_ClockIn(int id)
         {
             ClockInOutDatabase clockInOutDatabase = new ClockInOutDatabase { UserId = id,ClockoutTime=DateTime.UtcNow,IsClockedIn=true, IsDeleted = false };// database freaks out if you post with only one variable in it
@@ -89,8 +89,8 @@ namespace WebClock.Controllers
         // POST: api/ClockInOutDatabases/ClockOut/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        [Route("api/ClockInOutDatabases/ClockOut/{id}")]
+        [HttpPost("{id}")]
+        [Route("ClockOut/{id}")]
         public async Task<ActionResult<ClockInOutDatabase>> PostClockInOutDatabase_ClockOut(int id)
         {
             ClockInOutDatabase clockInOutDatabase = new ClockInOutDatabase { UserId = id, ClockoutTime = DateTime.UtcNow, IsClockedIn = false, IsDeleted = false };// database freaks out if you post with only one variable in it
@@ -102,7 +102,7 @@ namespace WebClock.Controllers
         // POST: api/ClockInOutDatabases/
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpPost("{id}")]
         public async Task<ActionResult<ClockInOutDatabase>> PostClockInOutDatabase(ClockInOutDatabase clockInOutDatabase)
         {
             _context.clockInOut.Add(clockInOutDatabase);
