@@ -12,17 +12,11 @@ namespace WebClock.Controllers
 {
     public static class Extensions
     {
-        public static ClockInOutController.ClockInOut ToClockIn(this int id)
+        public static Models.ClockInOut ToDb(this ClockInOutController.ClockInOut clockInOut)
         {
-            return new ClockInOutController.ClockInOut
-            {
-                UserId = id,
-                Type = ClockInOutController.ClockType.In,
-                Date = DateTime.UtcNow
-            };
+            return new Models.ClockInOut {UserId = clockInOut.UserId, Date = clockInOut.Date, Type = clockInOut.Type};
         }
     }
-
 
     [ApiController]
     [Route("api/[controller]")]
@@ -87,9 +81,16 @@ namespace WebClock.Controllers
         [Route("ClockIn/{id}")]
         public void ClockIn(int id)
         {
-            var clockInOut = id.ToClockIn();
+            var clockInOut = CreateClockInForId(id);
 
             _repository.Write(clockInOut);
+        }
+        private static ClockInOutController.ClockInOut CreateClockInForId( int id)
+        {
+            return new ClockInOutController.ClockInOut
+            {
+                UserId = id, Type = ClockInOutController.ClockType.In, Date = DateTime.UtcNow
+            };
         }
 
         public class Repository
@@ -103,13 +104,7 @@ namespace WebClock.Controllers
 
             public void Write(ClockInOut clockInOut)
             {
-                Models.ClockInOut clockInOutDb = new Models.ClockInOut
-                {
-                    UserId = clockInOut.UserId,
-                    Date = clockInOut.Date,
-                    Type = clockInOut.Type
-                };
-
+                var clockInOutDb = clockInOut.ToDb();
                 _context.ClockInOut.Add(clockInOutDb);
                 _context.SaveChanges();
             }
@@ -176,5 +171,6 @@ namespace WebClock.Controllers
         //        {
         //            return _context.clockInOut.Any(e => e.Clockinout_Id == id);
         //        }
+        
     }
 }
