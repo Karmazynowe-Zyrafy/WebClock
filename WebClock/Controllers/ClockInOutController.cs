@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using WebClock.Models;
+using WebClock.Models.EfRepository;
 
 namespace WebClock.Controllers
 {
@@ -16,11 +17,11 @@ namespace WebClock.Controllers
     [Route("api/[controller]")]
     public partial class ClockInOutController : ControllerBase
     {
-        private EfRepository _efRepository;
+        private IRepository _repository;
 
-        public ClockInOutController(EfRepository efRepository)
+        public ClockInOutController(IRepository repository)
         {
-            _efRepository = efRepository;
+            _repository = repository;
         }
 
         // POST: api/ClockInOut/ClockIn/5
@@ -30,7 +31,7 @@ namespace WebClock.Controllers
         {
             var clockInOut = CreateClockInForId(id);
 
-            _efRepository.Write(clockInOut);
+            _repository.Write(clockInOut);
         }
         private static ClockInOut CreateClockInForId(int id)
         {

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using WebClock.Controllers;
 using WebClock.Models;
+using WebClock.Models.EfRepository;
 
 namespace WebClock
 {
@@ -37,7 +38,7 @@ namespace WebClock
             });
             services.AddControllers();
             services.AddDbContext<ClockInOutContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
-            services.AddSingleton<EfRepository>();
+            services.AddSingleton(typeof(IRepository), typeof(EfRepository));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
