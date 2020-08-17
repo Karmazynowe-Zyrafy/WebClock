@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using WebClock.Models;
 using WebClock.Models.EfRepository;
+using WebClock.Models.MemoryRepository;
 
 namespace WebClock.Controllers
 {
@@ -29,6 +30,7 @@ namespace WebClock.Controllers
         [Route("ClockIn/{id}")]
         public void ClockIn(int id)
         {
+            var lol = new MemoryRepository();
             var clockInOut = CreateClockInForId(id);
 
             _repository.Write(clockInOut);
