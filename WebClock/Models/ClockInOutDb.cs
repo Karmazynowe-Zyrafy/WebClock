@@ -7,7 +7,7 @@ using WebClock.Controllers;
 
 namespace WebClock.Models
 {
-    public class ClockInOut
+    public class ClockInOutDb
     {
         [Key]
         public int Id { get; set; }
@@ -19,7 +19,7 @@ namespace WebClock.Models
         public DateTime Date { get; set; }
 
         [Required]
-        public ClockInOutController.ClockType Type { get; set; }
+        public ClockType Type { get; set; }
 
     }
 }

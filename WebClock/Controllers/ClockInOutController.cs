@@ -10,23 +10,17 @@ using WebClock.Models;
 
 namespace WebClock.Controllers
 {
-    public static class Extensions
-    {
-        public static Models.ClockInOut ToDb(this ClockInOutController.ClockInOut clockInOut)
-        {
-            return new Models.ClockInOut { UserId = clockInOut.UserId, Date = clockInOut.Date, Type = clockInOut.Type };
-        }
-    }
+   
 
     [ApiController]
     [Route("api/[controller]")]
-    public class ClockInOutController : ControllerBase
+    public partial class ClockInOutController : ControllerBase
     {
-        private Repository _repository;
+        private EfRepository _efRepository;
 
-        public ClockInOutController(ClockInOutContext context)
+        public ClockInOutController(EfRepository efRepository)
         {
-            _repository = new Repository(context);
+            _efRepository = efRepository;
         }
 
         // POST: api/ClockInOut/ClockIn/5
@@ -36,46 +30,19 @@ namespace WebClock.Controllers
         {
             var clockInOut = CreateClockInForId(id);
 
-            _repository.Write(clockInOut);
+            _efRepository.Write(clockInOut);
         }
-        private static ClockInOutController.ClockInOut CreateClockInForId(int id)
+        private static ClockInOut CreateClockInForId(int id)
         {
-            return new ClockInOutController.ClockInOut
+            return new ClockInOut
             {
                 UserId = id,
-                Type = ClockInOutController.ClockType.In,
+                Type = ClockType.In,
                 Date = DateTime.UtcNow
             };
         }
 
-        public class Repository
-        {
-            private readonly ClockInOutContext _context;
 
-            public Repository(ClockInOutContext context)
-            {
-                _context = context;
-            }
-
-            public void Write(ClockInOut clockInOut)
-            {
-                var clockInOutDb = clockInOut.ToDb();
-                _context.ClockInOut.Add(clockInOutDb);
-                _context.SaveChanges();
-            }
-        }
-
-        public enum ClockType
-        {
-            Out = 0,
-            In = 1
-        };
-
-        public class ClockInOut
-        {
-            public int UserId { get; set; }
-            public ClockType Type { get; set; }
-            public DateTime Date { get; set; }
-        }
+       
     }
 }
