@@ -32,22 +32,17 @@ namespace WebColock.Tests
             return JsonConvert.DeserializeObject<T>(content);
         }
 
-        public async Task<string> DoPost<T>(string path, T content) //Może będzie Task<T> 
+        public async Task<T> DoPost<T>(string path, object content)
         {
             var jsonString = JsonConvert.SerializeObject(content);
             var stringContent = new StringContent(jsonString, Encoding.UTF8, "application/json");
 
             var result = await Client.PostAsync(path, stringContent);
-            try
-            {
-                result.StatusCode.Should().Be(200);
-                return await result.Content.ReadAsStringAsync();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+
+            result.StatusCode.Should().Be(200);
+
+            var resultContent = await result.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<T>(resultContent);
         }
     }
 }
