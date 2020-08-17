@@ -20,4 +20,8 @@
     <ProjectReference Include="..\WebClock\WebClock.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UnitTest\" />
+  </ItemGroup>
+
 </Project>
