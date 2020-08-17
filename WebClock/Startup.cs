@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using WebClock.Controllers;
 using WebClock.Models;
 using WebClock.Models.EfRepository;
+using WebClock.Models.MemoryRepository;
 
 namespace WebClock
 {

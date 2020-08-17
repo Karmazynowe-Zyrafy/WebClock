@@ -1,33 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
 using WebClock.Models.EfRepository;
 
 namespace WebClock.Models.MemoryRepository
 {
-    public partial class MemoryRepository : IRepository
+    public class MemoryRepository : IRepository
     {
         public List<ClockInOutMemory> ClocksInOut { get; set; }
-        private int _autoid = 0;
+
+        private int _autoId = 0;
         public int AutoId
 
         {
-            get => _autoid;
-            private set { _autoid++; }
+            get => ++_autoId;
+            set { }
         }
+
         public void Write(ClockInOut clockInOut)
         {
-            throw new NotImplementedException();
+            ClocksInOut.Add(
+                new ClockInOutMemory
+                {
+                    Id = AutoId,
+                    UserId = clockInOut.UserId,
+                    Date = clockInOut.Date,
+                    Type = clockInOut.Type
+                });
         }
 
         public MemoryRepository()
         {
-            int x = 7;
-
-            ClocksInOut.Add(new ClockInOutMemory { Id = AutoId, UserId = 3, Date = DateTime.UtcNow, Type = ClockType.In });
-            ClocksInOut.Add(new ClockInOutMemory { Id = AutoId, UserId = 3, Date = DateTime.UtcNow.AddHours(1), Type = ClockType.Out });
-            ClocksInOut.Add(new ClockInOutMemory { Id = AutoId, UserId = 3, Date = DateTime.UtcNow.AddHours(2), Type = ClockType.In });
-            ClocksInOut.Add(new ClockInOutMemory { Id = AutoId, UserId = 3, Date = DateTime.UtcNow.AddHours(3), Type = ClockType.Out });
+            ClocksInOut = new List<ClockInOutMemory>
+            {
+                new ClockInOutMemory { Id = AutoId, UserId = 1, Date = DateTime.UtcNow, Type = ClockType.In  },
+                new ClockInOutMemory { Id = AutoId, UserId = 1, Date = DateTime.UtcNow, Type = ClockType.Out  },
+                new ClockInOutMemory { Id = AutoId, UserId = 2, Date = DateTime.UtcNow, Type = ClockType.In  }
+            };
         }
 
 

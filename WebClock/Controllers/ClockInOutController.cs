@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using WebClock.Models;
 using WebClock.Models.EfRepository;
 using WebClock.Models.MemoryRepository;
@@ -16,9 +10,9 @@ namespace WebClock.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public partial class ClockInOutController : ControllerBase
+    public class ClockInOutController : ControllerBase
     {
-        private IRepository _repository;
+        private readonly IRepository _repository;
 
         public ClockInOutController(IRepository repository)
         {
@@ -34,6 +28,7 @@ namespace WebClock.Controllers
             var clockInOut = CreateClockInForId(id);
 
             _repository.Write(clockInOut);
+
         }
         private static ClockInOut CreateClockInForId(int id)
         {

@@ -11,12 +11,11 @@
 
         public void Write(ClockInOut clockInOut)
         {
-            
+
             var clockInOutDb = clockInOut.MapToDb();
             _context.ClocksInOut.Add(clockInOutDb);
             _context.SaveChanges();
         }
-        
     }
 
     public enum ClockType
@@ -29,7 +28,7 @@
     {
         public static ClockInOutDb MapToDb(this ClockInOut clockInOut)
         {
-            return new ClockInOutDb {UserId = clockInOut.UserId, Date = clockInOut.Date, Type = clockInOut.Type};
+            return new ClockInOutDb { UserId = clockInOut.UserId, Date = clockInOut.Date, Type = clockInOut.Type };
         }
     }
 }
