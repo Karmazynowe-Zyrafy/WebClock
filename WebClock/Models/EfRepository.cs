@@ -19,25 +19,26 @@ namespace WebClock.Models
             _context.SaveChanges();
         }
     }
-}
 
-public enum ClockType
-{
-    Out = 0,
-    In = 1
-};
 
-public class ClockInOut
-{
-    public int UserId { get; set; }
-    public ClockType Type { get; set; }
-    public DateTime Date { get; set; }
-}
-
-public static class Extensions
-{
-    public static ClockInOutDb MapToDb(this ClockInOut clockInOut)
+    public enum ClockType
     {
-        return new ClockInOutDb {UserId = clockInOut.UserId, Date = clockInOut.Date, Type = clockInOut.Type};
+        Out = 0,
+        In = 1
+    };
+
+    public class ClockInOut
+    {
+        public int UserId { get; set; }
+        public ClockType Type { get; set; }
+        public DateTime Date { get; set; }
+    }
+
+    public static class Extensions
+    {
+        public static ClockInOutDb MapToDb(this ClockInOut clockInOut)
+        {
+            return new ClockInOutDb {UserId = clockInOut.UserId, Date = clockInOut.Date, Type = clockInOut.Type};
+        }
     }
 }
