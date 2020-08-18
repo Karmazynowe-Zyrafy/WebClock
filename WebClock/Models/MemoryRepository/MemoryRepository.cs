@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 using System.Threading;
-using WebClock.Models.EfRepository;
 
 namespace WebClock.Models.MemoryRepository
 {
     public class MemoryRepository : IRepository
     {
-        public List<ClockInOutMemory> ClocksInOut { get; set; }
+        public List<ClockInOutMemory> ClocksInOut { get; set; } = new List<ClockInOutMemory>();
 
         private int _lastId = 0;
         private int GenerateId()
@@ -27,17 +24,5 @@ namespace WebClock.Models.MemoryRepository
                     Type = clockInOut.Type
                 });
         }
-
-        public MemoryRepository()
-        {
-            ClocksInOut = new List<ClockInOutMemory>
-            {
-                new ClockInOutMemory { Id = GenerateId(), UserId = 1, Date = DateTime.UtcNow, Type = ClockType.In  },
-                new ClockInOutMemory { Id = GenerateId(), UserId = 1, Date = DateTime.UtcNow, Type = ClockType.Out  },
-                new ClockInOutMemory { Id = GenerateId(), UserId = 2, Date = DateTime.UtcNow, Type = ClockType.In  }
-            };
-        }
-
-
     }
 }

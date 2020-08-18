@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebClock.Models.EfRepository
+namespace WebClock.Models
 {
     public class ClockInOut
     {

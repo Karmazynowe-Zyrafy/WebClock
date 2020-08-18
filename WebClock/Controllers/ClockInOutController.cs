@@ -1,13 +1,10 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using WebClock.Models;
-using WebClock.Models.EfRepository;
 using WebClock.Models.MemoryRepository;
 
 namespace WebClock.Controllers
 {
-   
-
     [ApiController]
     [Route("api/[controller]")]
     public class ClockInOutController : ControllerBase
@@ -24,7 +21,6 @@ namespace WebClock.Controllers
         [Route("ClockIn/{id}")]
         public void ClockIn(int id)
         {
-            var lol = new MemoryRepository();
             var clockInOut = CreateClockInForId(id);
 
             _repository.Write(clockInOut);

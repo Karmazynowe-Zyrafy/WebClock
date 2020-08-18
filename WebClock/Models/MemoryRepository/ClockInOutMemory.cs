@@ -1,5 +1,4 @@
 ﻿using System;
-using WebClock.Models.EfRepository;
 
 namespace WebClock.Models.MemoryRepository
 {

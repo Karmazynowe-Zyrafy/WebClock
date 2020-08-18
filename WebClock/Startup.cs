@@ -1,20 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using WebClock.Controllers;
 using WebClock.Models;
 using WebClock.Models.EfRepository;
-using WebClock.Models.MemoryRepository;
 
 namespace WebClock
 {
@@ -26,6 +17,10 @@ namespace WebClock
         {
             Configuration = configuration;
         }
+        //public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        //{
+        //    Configuration = configuration;
+        //}
 
         public IConfiguration Configuration { get; }
 
@@ -38,6 +33,12 @@ namespace WebClock
                     builder => { builder.WithOrigins("http://localhost:4200"); });
             });
             services.AddControllers();
+
+            SetupRepository(services);
+        }
+
+        protected virtual void SetupRepository(IServiceCollection services)
+        {
             services.AddDbContext<ClockInOutContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
             services.AddSingleton(typeof(IRepository), typeof(EfRepository));
         }

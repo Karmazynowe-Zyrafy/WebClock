@@ -18,12 +18,6 @@
         }
     }
 
-    public enum ClockType
-    {
-        Out = 0,
-        In = 1
-    };
-
     public static class Extensions
     {
         public static ClockInOutDb MapToDb(this ClockInOut clockInOut)
