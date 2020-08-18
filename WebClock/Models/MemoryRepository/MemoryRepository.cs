@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using WebClock.Models.EfRepository;
 
 namespace WebClock.Models.MemoryRepository
@@ -8,12 +10,10 @@ namespace WebClock.Models.MemoryRepository
     {
         public List<ClockInOutMemory> ClocksInOut { get; set; }
 
-        private int _autoId = 0;
-        public int AutoId
-
+        private int _lastId = 0;
+        private int GenerateId()
         {
-            get => ++_autoId;
-            set { }
+            return Interlocked.Increment(ref _lastId);
         }
 
         public void Write(ClockInOut clockInOut)
@@ -21,7 +21,7 @@ namespace WebClock.Models.MemoryRepository
             ClocksInOut.Add(
                 new ClockInOutMemory
                 {
-                    Id = AutoId,
+                    Id = GenerateId(),
                     UserId = clockInOut.UserId,
                     Date = clockInOut.Date,
                     Type = clockInOut.Type
@@ -32,9 +32,9 @@ namespace WebClock.Models.MemoryRepository
         {
             ClocksInOut = new List<ClockInOutMemory>
             {
-                new ClockInOutMemory { Id = AutoId, UserId = 1, Date = DateTime.UtcNow, Type = ClockType.In  },
-                new ClockInOutMemory { Id = AutoId, UserId = 1, Date = DateTime.UtcNow, Type = ClockType.Out  },
-                new ClockInOutMemory { Id = AutoId, UserId = 2, Date = DateTime.UtcNow, Type = ClockType.In  }
+                new ClockInOutMemory { Id = GenerateId(), UserId = 1, Date = DateTime.UtcNow, Type = ClockType.In  },
+                new ClockInOutMemory { Id = GenerateId(), UserId = 1, Date = DateTime.UtcNow, Type = ClockType.Out  },
+                new ClockInOutMemory { Id = GenerateId(), UserId = 2, Date = DateTime.UtcNow, Type = ClockType.In  }
             };
         }
 
