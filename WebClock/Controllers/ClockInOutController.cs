@@ -26,6 +26,15 @@ namespace WebClock.Controllers
             _repository.Write(clockInOut);
         }
 
+        // POST: api/ClockInOut/ClockOut/5
+        [HttpPost]
+        [Route("ClockOut/{id}")]
+        public void ClockOut(int id)
+        {
+            var clockInOut = CreateClockOutForId(id);
+
+            _repository.Write(clockInOut);
+        }
         //public ListOfClocksDto GetListOfClocks()
         //{
         //    return new ListOfClocksDto();
@@ -42,6 +51,16 @@ namespace WebClock.Controllers
             {
                 UserId = id,
                 Type = ClockType.In,
+                Date = DateTime.UtcNow
+            };
+        }
+
+        private static ClockInOut CreateClockOutForId(int id)
+        {
+            return new ClockInOut
+            {
+                UserId = id,
+                Type = ClockType.Out,
                 Date = DateTime.UtcNow
             };
         }
