@@ -25,7 +25,7 @@ namespace WebColock.Tests
                 builder.ConfigureTestServices(services =>
                 {
                     //todo określić co tu się dzieje
-                    services.AddControllersWithViews()
+                    services.AddControllers()
                         .AddApplicationPart(typeof(Startup).Assembly);
                 });
             }).CreateClient();
