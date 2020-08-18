@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebClock
 {
@@ -10,5 +7,6 @@ namespace WebClock
         public int Hour { get; set; }
         public int Minute { get; set; }
         public int Second { get; set; }
+        public DateTime Time { get; set; }
     }
 }
