@@ -17,10 +17,6 @@ namespace WebClock
         {
             Configuration = configuration;
         }
-        //public Startup(IConfiguration configuration, IWebHostEnvironment env)
-        //{
-        //    Configuration = configuration;
-        //}
 
         public IConfiguration Configuration { get; }
 
@@ -40,7 +36,7 @@ namespace WebClock
         protected virtual void SetupRepository(IServiceCollection services)
         {
             services.AddDbContext<ClockInOutContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
-            services.AddSingleton(typeof(IRepository), typeof(EfRepository));
+            services.AddScoped(typeof(IRepository), typeof(EfRepository));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

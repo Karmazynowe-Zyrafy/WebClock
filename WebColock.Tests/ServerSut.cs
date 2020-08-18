@@ -5,28 +5,12 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using WebClock;
-using WebClock.Models;
-using WebClock.Models.MemoryRepository;
 
 namespace WebColock.Tests
 {
-    //public class ServerSutStartup : Startup
-    //{
-    //    //public ServerSutStartup(IConfiguration configuration) : base(configuration)
-    //    //{
-    //    //}
-    //    public ServerSutStartup(IConfiguration configuration) : base(configuration)
-    //    {
-    //    }
-    //    protected override void SetupRepository(IServiceCollection services)
-    //    {
-    //        services.AddSingleton(typeof(IRepository), typeof(MemoryRepository));
-    //    }
-    //}
     public class ServerSut
     {
         public HttpClient Client { get; }
@@ -37,12 +21,12 @@ namespace WebColock.Tests
             Client = webApplication.WithWebHostBuilder(builder =>
             {
                 builder.UseEnvironment("Debug");
-                builder.UseStartup<Startup>();
+                builder.UseStartup<ServerSutStartup>();
                 builder.ConfigureTestServices(services =>
                 {
+                    //todo określić co tu się dzieje
                     services.AddControllersWithViews()
                         .AddApplicationPart(typeof(Startup).Assembly);
-                    services.AddSingleton(typeof(IRepository), typeof(MemoryRepository));
                 });
             }).CreateClient();
         }

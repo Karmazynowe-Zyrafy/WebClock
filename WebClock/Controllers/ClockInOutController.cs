@@ -24,8 +24,18 @@ namespace WebClock.Controllers
             var clockInOut = CreateClockInForId(id);
 
             _repository.Write(clockInOut);
-
         }
+
+        //public ListOfClocksDto GetListOfClocks()
+        //{
+        //    return new ListOfClocksDto();
+        //}
+
+        //public class ListOfClocksDto
+        //{
+        //    public int Number { get; set; }
+        //}
+
         private static ClockInOut CreateClockInForId(int id)
         {
             return new ClockInOut
@@ -35,8 +45,5 @@ namespace WebClock.Controllers
                 Date = DateTime.UtcNow
             };
         }
-
-
-       
     }
 }
