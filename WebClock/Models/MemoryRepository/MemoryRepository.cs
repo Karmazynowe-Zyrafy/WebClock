@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace WebClock.Models.MemoryRepository
@@ -23,6 +24,11 @@ namespace WebClock.Models.MemoryRepository
                     Date = clockInOut.Date,
                     Type = clockInOut.Type
                 });
+        }
+
+        public List<ClockInOut> Read(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

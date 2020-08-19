@@ -15,6 +15,8 @@ namespace WebClock.Controllers
         public ClockInOutController(IRepository repository)
         {
             _repository = repository;
+            _repository.Read(1);
+
         }
 
         // POST: api/ClockInOut/ClockIn/5
