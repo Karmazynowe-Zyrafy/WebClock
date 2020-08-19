@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-
-namespace WebClock.Models.EfRepository
+﻿namespace WebClock.Models.EfRepository
 {
     public class EfRepository : IRepository
     {
@@ -15,12 +11,10 @@ namespace WebClock.Models.EfRepository
 
         public void Write(ClockInOut clockInOut)
         {
-
             var clockInOutDb = clockInOut.MapToDb();
             _context.ClocksInOut.Add(clockInOutDb);
             _context.SaveChanges();
         }
-        
     }
 
     public static class Extensions

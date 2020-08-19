@@ -16,6 +16,5 @@ namespace WebClock.Models.EfRepository
 
         [Required]
         public ClockType Type { get; set; }
-
     }
 }

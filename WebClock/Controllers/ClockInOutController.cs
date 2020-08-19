@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using WebClock.Models;
-using WebClock.Models.MemoryRepository;
 
 namespace WebClock.Controllers
 {
@@ -36,15 +34,6 @@ namespace WebClock.Controllers
 
             _repository.Write(clockInOut);
         }
-        //public ListOfClocksDto GetListOfClocks()
-        //{
-        //    return new ListOfClocksDto();
-        //}
-
-        //public class ListOfClocksDto
-        //{
-        //    public int Number { get; set; }
-        //}
 
         private static ClockInOut CreateClockInForId(int id)
         {

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 
 namespace WebClock.Models.MemoryRepository
@@ -25,6 +24,5 @@ namespace WebClock.Models.MemoryRepository
                     Type = clockInOut.Type
                 });
         }
-        
     }
 }
