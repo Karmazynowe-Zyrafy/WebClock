@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using WebClock.Models;
 using WebClock.Models.MemoryRepository;
@@ -34,6 +35,14 @@ namespace WebClock.Controllers
             var clockInOut = CreateClockOutForId(id);
 
             _repository.Write(clockInOut);
+        }
+        // GET: api/ClockInOut/5
+        [HttpGet("{id}")]
+
+        public List<ClockInOut> GetClockInOutById(int id)
+        {
+           return _repository.Read(id);
+
         }
         //public ListOfClocksDto GetListOfClocks()
         //{
