@@ -36,14 +36,6 @@ namespace WebClock.Controllers
 
             _repository.Write(clockInOut);
         }
-        // GET: api/ClockInOut/5
-        [HttpGet("{id}")]
-
-        public List<ClockInOut> GetClockInOutById(int id)
-        {
-           return _repository.Read(id);
-
-        }
         //public ListOfClocksDto GetListOfClocks()
         //{
         //    return new ListOfClocksDto();

@@ -20,16 +20,7 @@ namespace WebClock.Models.EfRepository
             _context.ClocksInOut.Add(clockInOutDb);
             _context.SaveChanges();
         }
-        public List<ClockInOut> Read(int id)
-        {
-            var clockInOutDb = _context.ClocksInOut.Where(x => x.UserId == id).ToList();
-            var clockInOut = new List<ClockInOut>();
-            for(int i =0;i< clockInOutDb.Count;i++)
-            {
-                clockInOut.Add(clockInOutDb[i].MapFromDb());
-            }
-            return clockInOut;
-        }
+        
     }
 
     public static class Extensions

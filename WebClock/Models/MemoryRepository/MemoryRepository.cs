@@ -25,21 +25,6 @@ namespace WebClock.Models.MemoryRepository
                     Type = clockInOut.Type
                 });
         }
-        public List<ClockInOut> Read(int id)
-        {
-            var result = ClocksInOut.Where(x => x.UserId == id).ToList();
-            var clockInOut = new List<ClockInOut>(result.Count);
-            for (int i = 0; i < result.Count; i++)
-            {
-                clockInOut.Add(
-               new ClockInOut
-               {
-                   UserId = result[i].UserId,
-                   Date = result[i].Date,
-                   Type = result[i].Type
-               });
-            }
-            return clockInOut;
-        }
+        
     }
 }
