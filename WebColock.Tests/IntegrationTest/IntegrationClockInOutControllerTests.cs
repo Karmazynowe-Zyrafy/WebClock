@@ -23,7 +23,10 @@ namespace WebColock.Tests.IntegrationTest
             var result = await _server
                 .DoGet<BalanceDto>($"api/ClockInOut/Balance/{_userId}");
 
-            result.Should().BeOfType(typeof(BalanceDto));
+            result.HoursWorked.Should().NotBe(null);
+            result.MinutesWorked.Should().NotBe(null);
+            result.HoursLeft.Should().NotBe(null);
+            result.MinutesLeft.Should().NotBe(null);
         }
     }
 }
