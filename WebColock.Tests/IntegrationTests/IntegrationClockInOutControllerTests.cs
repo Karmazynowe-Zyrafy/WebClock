@@ -1,7 +1,5 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using WebClock.Controllers.Dtos;
-using WebClock.Models;
 using Xunit;
 
 namespace WebColock.Tests.IntegrationTest
@@ -10,11 +8,7 @@ namespace WebColock.Tests.IntegrationTest
     {
         private readonly ServerSut _server = new ServerSut();
         const int _userId = 1;
-        private readonly IRepository _repository;
-        public IntegrationClockInOutControllerTests(IRepository repository)
-        {
-            _repository = repository;
-        }
+
         [Fact]
         public async void ClockIn_Test()
         {
@@ -44,22 +38,6 @@ namespace WebColock.Tests.IntegrationTest
         [Fact]
         public async void Balance_UserWorks2HoursAnd10MinutesInTheSameDay_ReturnCorrectAmountOfHoursAndMinutes()
         {
-          
-            var clockIn = new ClockInOut
-            {
-                UserId = 1,
-                Date = new DateTime(2020, 08, 19, 9, 10, 0),
-                Type = ClockType.In
-            };
-            var clockOut = new ClockInOut
-            {
-                UserId = 1,
-                Date = new DateTime(2020, 08, 19, 11, 20, 0),
-                Type = ClockType.Out
-            };
-            _repository.Write(clockIn);
-            _repository.Write(clockOut);
-
             var result = await _server
                 .DoGet<BalanceDto>($"api/ClockInOut/Balance/{_userId}");
 

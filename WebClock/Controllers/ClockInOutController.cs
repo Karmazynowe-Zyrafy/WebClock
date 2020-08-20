@@ -15,8 +15,6 @@ namespace WebClock.Controllers
         public ClockInOutController(IRepository repository)
         {
             _repository = repository;
-            _repository.Read(1);
-
         }
 
         // POST: api/ClockInOut/ClockIn/5
@@ -47,8 +45,8 @@ namespace WebClock.Controllers
             var dataIn = data.Where(x => x.Type == ClockType.In).ToList();
             var dataOut = data.Where(x => x.Type == ClockType.Out).ToList();
 
-        var totalTime = new TimeSpan();
- 
+            var totalTime = new TimeSpan();
+
             foreach (var inItem in dataIn)
             {
                 foreach (var outItem in dataOut)
@@ -56,15 +54,14 @@ namespace WebClock.Controllers
                     totalTime = outItem.Date.TimeOfDay - inItem.Date.TimeOfDay;
                 }
             }
- 
+
             var balanceDto = new BalanceDto
             {
                 HoursWorked = Convert.ToInt32(totalTime.TotalHours),
                 MinutesWorked = totalTime.Minutes
             };
- 
+
             return balanceDto;
-            
         }
     }
 }

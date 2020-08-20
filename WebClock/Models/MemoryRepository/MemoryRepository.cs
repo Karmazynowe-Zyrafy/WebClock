@@ -9,6 +9,22 @@ namespace WebClock.Models.MemoryRepository
     {
         public List<ClockInOutMemory> ClocksInOut { get; set; } = new List<ClockInOutMemory>();
 
+        public MemoryRepository()
+        {
+            Write(new ClockInOut
+            {
+                UserId = 1,
+                    Date = new DateTime(2020, 08, 19, 9, 10, 0),
+                    Type = ClockType.In
+            });
+            Write(new ClockInOut
+            {
+                UserId = 1,
+                Date = new DateTime(2020, 08, 19, 11, 20, 0),
+                Type = ClockType.Out
+            });
+        }
+
         private int _lastId = 0;
         private int GenerateId()
         {
@@ -30,7 +46,7 @@ namespace WebClock.Models.MemoryRepository
         public List<ClockInOut> Read(int id)
         {
             var result = ClocksInOut.Where(x => x.UserId == id).ToList();
-            var clockInOut = new List<ClockInOut>(result.Count);
+            var clockInOut = new List<ClockInOut>();
             clockInOut.AddRange(result
                 .Select(t => new ClockInOut {UserId = t.UserId, Date = t.Date, Type = t.Type}));
             return clockInOut;
