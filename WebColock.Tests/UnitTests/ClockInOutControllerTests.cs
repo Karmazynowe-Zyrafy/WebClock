@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using FluentAssertions;
-using WebClock.Controllers;
+using WebClock;
 using WebClock.Controllers.Dtos;
 using WebClock.Models;
 using Xunit;
@@ -21,8 +20,6 @@ namespace WebColock.Tests.UnitTests
         [Fact]
         public void CountWorkTime_UserWorks2HoursAnd10MinutesInTheSameDay_ReturnCorrectAmountOfHoursAndMinutes()
         {
-            var controller = new ClockInOutController();
-
             List<ClockInOut> dataIn = new List<ClockInOut>
             {
                 new ClockInOut
@@ -31,7 +28,6 @@ namespace WebColock.Tests.UnitTests
                     Date = new DateTime(2020, 08, 19, 9, 10, 0),
                     Type = ClockType.In
                 },
-
             };
             List<ClockInOut> dataOut = new List<ClockInOut>
             {
@@ -43,7 +39,7 @@ namespace WebColock.Tests.UnitTests
                 }
             };
 
-            BalanceDto result = controller.CountWorkTime(dataIn, dataOut);
+            BalanceDto result = CountBalance.CountWorkTime(dataIn, dataOut);
 
             result.HoursWorked.Should().Be(2);
             result.MinutesWorked.Should().Be(10);
