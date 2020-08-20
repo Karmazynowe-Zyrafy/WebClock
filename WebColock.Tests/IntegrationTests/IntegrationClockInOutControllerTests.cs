@@ -2,7 +2,6 @@
 using FluentAssertions;
 using WebClock.Controllers.Dtos;
 using WebClock.Models;
-using WebClock.Models.MemoryRepository;
 using Xunit;
 
 namespace WebColock.Tests.IntegrationTest
@@ -11,7 +10,11 @@ namespace WebColock.Tests.IntegrationTest
     {
         private readonly ServerSut _server = new ServerSut();
         const int _userId = 1;
-
+        private readonly IRepository _repository;
+        public IntegrationClockInOutControllerTests(IRepository repository)
+        {
+            _repository = repository;
+        }
         [Fact]
         public async void ClockIn_Test()
         {
@@ -41,7 +44,7 @@ namespace WebColock.Tests.IntegrationTest
         [Fact]
         public async void Balance_UserWorks2HoursAnd10MinutesInTheSameDay_ReturnCorrectAmountOfHoursAndMinutes()
         {
-            var repository = new MemoryRepository();
+          
             var clockIn = new ClockInOut
             {
                 UserId = 1,
@@ -54,8 +57,8 @@ namespace WebColock.Tests.IntegrationTest
                 Date = new DateTime(2020, 08, 19, 11, 20, 0),
                 Type = ClockType.Out
             };
-            repository.Write(clockIn);
-            repository.Write(clockOut);
+            _repository.Write(clockIn);
+            _repository.Write(clockOut);
 
             var result = await _server
                 .DoGet<BalanceDto>($"api/ClockInOut/Balance/{_userId}");
