@@ -44,11 +44,27 @@ namespace WebClock.Controllers
         public BalanceDto Balance(int id)
         {
             var data = _repository.Read(id);
-            var dataIn = data.Where(x => x.Type == ClockType.In);
-            var dataOut = data.Where(x => x.Type == ClockType.Out);
+            var dataIn = data.Where(x => x.Type == ClockType.In).ToList();
+            var dataOut = data.Where(x => x.Type == ClockType.Out).ToList();
+
+        var totalTime = new TimeSpan();
+ 
+            foreach (var inItem in dataIn)
+            {
+                foreach (var outItem in dataOut)
+                {
+                    totalTime = outItem.Date.TimeOfDay - inItem.Date.TimeOfDay;
+                }
+            }
+ 
+            var balanceDto = new BalanceDto
+            {
+                HoursWorked = Convert.ToInt32(totalTime.TotalHours),
+                MinutesWorked = totalTime.Minutes
+            };
+ 
+            return balanceDto;
             
-            
-            throw new NotImplementedException();
         }
     }
 }
