@@ -6,7 +6,6 @@ namespace WebClock.Models.EfRepository
     {
         public ClockInOutContext(DbContextOptions<ClockInOutContext> options) : base(options)
         {
-
         }
         public DbSet<ClockInOutDb> ClocksInOut { get; set; }
     }

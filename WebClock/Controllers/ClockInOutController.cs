@@ -28,13 +28,31 @@ namespace WebClock.Controllers
 
             _repository.Write(clockInOut);
         }
-
         private static ClockInOut CreateClockInForId(int id)
         {
             return new ClockInOut
             {
                 UserId = id,
                 Type = ClockType.In,
+                Date = DateTime.UtcNow
+            };
+        }
+
+        // POST: api/ClockInOut/ClockOut/5
+        [HttpPost]
+        [Route("ClockOut/{id}")]
+        public void ClockOut(int id)
+        {
+            var clockInOut = CreateClockOutForId(id);
+
+            _repository.Write(clockInOut);
+        }
+        private static ClockInOut CreateClockOutForId(int id)
+        {
+            return new ClockInOut
+            {
+                UserId = id,
+                Type = ClockType.Out,
                 Date = DateTime.UtcNow
             };
         }
