@@ -1,5 +1,8 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using WebClock.Controllers.Dtos;
+using WebClock.Models;
+using WebClock.Models.MemoryRepository;
 using Xunit;
 
 namespace WebColock.Tests.IntegrationTest
@@ -27,6 +30,38 @@ namespace WebColock.Tests.IntegrationTest
             result.MinutesWorked.Should().NotBe(null);
             result.HoursLeft.Should().NotBe(null);
             result.MinutesLeft.Should().NotBe(null);
+        }
+
+        // A - Wchodzi/wychodzi dzisiaj
+        // B - Wchodzi dzisiaj, wychodzi jutro
+        // C - Wchodzi kilka razy dziennie
+        // Inne scenariusze
+        // D - Wchodzi kilka razy z rzędu
+        // E - Wychodzi kilka razy z rzędu
+        [Fact]
+        public async void Balance_UserWorks2HoursAnd10MinutesInTheSameDay_ReturnCorrectAmountOfHoursAndMinutes()
+        {
+            var repository = new MemoryRepository();
+            var clockIn = new ClockInOut
+            {
+                UserId = 1,
+                Date = new DateTime(2020, 08, 19, 9, 10, 0),
+                Type = ClockType.In
+            };
+            var clockOut = new ClockInOut
+            {
+                UserId = 1,
+                Date = new DateTime(2020, 08, 19, 11, 20, 0),
+                Type = ClockType.Out
+            };
+            repository.Write(clockIn);
+            repository.Write(clockOut);
+
+            var result = await _server
+                .DoGet<BalanceDto>($"api/ClockInOut/Balance/{_userId}");
+
+            result.HoursWorked.Should().Be(2);
+            result.MinutesWorked.Should().Be(10);
         }
     }
 }
