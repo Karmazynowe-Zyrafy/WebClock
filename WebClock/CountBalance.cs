@@ -21,9 +21,9 @@ namespace WebClock
 
             var balanceDto = new BalanceDto
             {
-                HoursWorked = Convert.ToInt32(totalWorkTime.TotalHours),
+                HoursWorked = (int) totalWorkTime.TotalHours,
                 MinutesWorked = totalWorkTime.Minutes,
-                HoursLeft = Convert.ToInt32(totalLeftTime.TotalHours),
+                HoursLeft = (int) totalLeftTime.TotalHours,
                 MinutesLeft = totalLeftTime.Minutes
             };
             return balanceDto;
