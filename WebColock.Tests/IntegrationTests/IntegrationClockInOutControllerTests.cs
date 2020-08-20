@@ -28,21 +28,5 @@ namespace WebColock.Tests.IntegrationTest
             result.HoursLeft.Should().NotBe(null).And.Should().NotBe(0);
             result.MinutesLeft.Should().NotBe(null).And.Should().NotBe(0);
         }
-
-        // A - Wchodzi/wychodzi dzisiaj
-        // B - Wchodzi dzisiaj, wychodzi jutro
-        // C - Wchodzi kilka razy dziennie
-        // Inne scenariusze
-        // D - Wchodzi kilka razy z rzędu
-        // E - Wychodzi kilka razy z rzędu
-        [Fact]
-        public async void Balance_UserWorks2HoursAnd10MinutesInTheSameDay_ReturnCorrectAmountOfHoursAndMinutes()
-        {
-            var result = await _server
-                .DoGet<BalanceDto>($"api/ClockInOut/Balance/{_userId}");
-
-            result.HoursWorked.Should().Be(2);
-            result.MinutesWorked.Should().Be(10);
-        }
     }
 }
