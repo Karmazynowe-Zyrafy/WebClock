@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebClock.Controllers.Dtos;
 using WebClock.Models;
-using WebClock.Models.MemoryRepository;
 
 namespace WebClock.Controllers
 {
@@ -43,6 +43,11 @@ namespace WebClock.Controllers
         [Route("Balance/{id}")]
         public BalanceDto Balance(int id)
         {
+            var data = _repository.Read(id);
+            var dataIn = data.Where(x => x.Type == ClockType.In);
+            var dataOut = data.Where(x => x.Type == ClockType.Out);
+            
+            
             throw new NotImplementedException();
         }
     }
