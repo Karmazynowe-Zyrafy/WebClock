@@ -7,26 +7,25 @@ namespace WebClock
 {
     public static class CountBalance
     {
-        public static BalanceDto CountWorkTime(List<ClockInOut> dataIn, List<ClockInOut> dataOut)
+        public static BalanceDto CountWorkTime(List<ClockInOut> datesIn, List<ClockInOut> datesOut)
         {
             var totalWorkTime = new TimeSpan();
-            TimeSpan hoursToWorkInMonth = new TimeSpan(0, 160, 0, 0);
+            var hoursToWorkInMonth = new TimeSpan(0, 160, 0, 0);
 
-            for (int i = 0; i < dataIn.Count; i++)
+            for (int i = 0; i < datesIn.Count; i++)
             {
-                totalWorkTime += dataOut[i].Date.TimeOfDay - dataIn[i].Date.TimeOfDay;
+                totalWorkTime += datesOut[i].Date.TimeOfDay - datesIn[i].Date.TimeOfDay;
             }
 
             var totalLeftTime = hoursToWorkInMonth - totalWorkTime;
 
-            var balanceDto = new BalanceDto
+            return new BalanceDto
             {
-                HoursWorked = (int) totalWorkTime.TotalHours,
+                HoursWorked = (int)totalWorkTime.TotalHours,
                 MinutesWorked = totalWorkTime.Minutes,
-                HoursLeft = (int) totalLeftTime.TotalHours,
+                HoursLeft = (int)totalLeftTime.TotalHours,
                 MinutesLeft = totalLeftTime.Minutes
             };
-            return balanceDto;
         }
     }
 }

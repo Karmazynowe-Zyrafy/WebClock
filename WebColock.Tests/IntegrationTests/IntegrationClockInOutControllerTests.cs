@@ -20,6 +20,12 @@ namespace WebColock.Tests.IntegrationTest
         [Fact]
         public async void Balance_WhenCalled_ReturnBalanceDtoObject()
         {
+            await _server
+                .DoPost<object>($"api/ClockInOut/ClockIn/{_userId}", new object());
+
+            await _server
+                .DoPost<object>($"api/ClockInOut/ClockOut/{_userId}", new object());
+
             var result = await _server
                 .DoGet<BalanceDto>($"api/ClockInOut/Balance/{_userId}");
 

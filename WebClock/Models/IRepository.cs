@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using WebClock.Models.EfRepository;
 
 namespace WebClock.Models
 {
@@ -7,6 +6,5 @@ namespace WebClock.Models
     {
         void Write(ClockInOut clockInOut);
         List<ClockInOut> Read(int id);
-        
     }
 }
