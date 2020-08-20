@@ -11,7 +11,6 @@
 
         public void Write(ClockInOut clockInOut)
         {
-
             var clockInOutDb = clockInOut.MapToDb();
             _context.ClocksInOut.Add(clockInOutDb);
             _context.SaveChanges();
@@ -23,6 +22,10 @@
         public static ClockInOutDb MapToDb(this ClockInOut clockInOut)
         {
             return new ClockInOutDb { UserId = clockInOut.UserId, Date = clockInOut.Date, Type = clockInOut.Type };
+        }
+        public static ClockInOut MapFromDb(this ClockInOutDb clockInOutDb)
+        {
+            return new ClockInOut { UserId = clockInOutDb.UserId, Date = clockInOutDb.Date, Type = clockInOutDb.Type };
         }
     }
 }

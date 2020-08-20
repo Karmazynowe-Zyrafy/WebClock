@@ -14,5 +14,14 @@ namespace WebColock.Tests.IntegrationTest
                 .DoPost<object>($"api/ClockInOut/ClockIn/{userId}", new object());
             //todo usunąć <object>
         }
+        [Fact]
+        public async void ClockOut_Test()
+        {
+            var server = new ServerSut();
+            var userId = 1;
+
+            await server
+                .DoPost<object>($"api/ClockInOut/ClockOut/{userId}", new object());
+        }
     }
 }
