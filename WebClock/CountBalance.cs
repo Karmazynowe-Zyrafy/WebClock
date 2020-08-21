@@ -12,7 +12,7 @@ namespace WebClock
             var totalWorkTime = new TimeSpan();
             var hoursToWorkInMonth = new TimeSpan(0, 160, 0, 0);
 
-            for (int i = 0; i < datesIn.Count; i++)
+            for (var i = 0; i < datesIn.Count; i++)
             {
                 totalWorkTime += datesOut[i].Date.TimeOfDay - datesIn[i].Date.TimeOfDay;
             }

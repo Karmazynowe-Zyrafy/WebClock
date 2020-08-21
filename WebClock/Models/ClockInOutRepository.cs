@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using WebClock.Models;
 
-namespace WebClock
+namespace WebClock.Models
 {
     public class ClockInOutRepository
     {
