@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace WebClock.Models.MemoryRepository
@@ -23,6 +24,15 @@ namespace WebClock.Models.MemoryRepository
                     Date = clockInOut.Date,
                     Type = clockInOut.Type
                 });
+        }
+
+        public List<ClockInOut> Read(int id)
+        {
+            var result = ClocksInOut.Where(x => x.UserId == id).ToList();
+            var clockInOut = new List<ClockInOut>();
+            clockInOut.AddRange(result
+                .Select(t => new ClockInOut {UserId = t.UserId, Date = t.Date, Type = t.Type}));
+            return clockInOut;
         }
     }
 }

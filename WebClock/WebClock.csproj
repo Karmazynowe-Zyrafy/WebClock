@@ -5,13 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="Controllers\Dtos\**" />
-      <Content Remove="Controllers\Dtos\**" />
-      <EmbeddedResource Remove="Controllers\Dtos\**" />
-      <None Remove="Controllers\Dtos\**" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Remove="Models\ClockinoutContext.cs" />
     </ItemGroup>
 
