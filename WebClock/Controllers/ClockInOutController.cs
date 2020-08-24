@@ -65,5 +65,15 @@ namespace WebClock.Controllers
 
             return CountBalance.CountWorkTime(datesIn, datesOut);
         }
+        [HttpGet]
+        [Route("BalanceToThisDay/{id}")]
+        public BalanceDto BalanceToThisDay(int id)
+        {
+            var clockInOutRepository = new ClockInOutRepository(_repository);
+            var datesIn = clockInOutRepository.GetClockInsForThisMonth(id).ToList();
+            var datesOut = clockInOutRepository.GetClockOutsForThisMonth(id).ToList();
+
+            return CountBalance.CountWorkTimeCurrent(datesIn, datesOut);
+        }
     }
 }

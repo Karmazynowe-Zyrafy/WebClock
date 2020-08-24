@@ -46,5 +46,53 @@ namespace WebColock.Tests.UnitTests
             result.HoursLeft.Should().Be(157);
             result.MinutesLeft.Should().Be(50);
         }
+        [Fact]
+        public void CountWorkTimeThisMonth()
+        {
+            List<ClockInOut> dataIn = new List<ClockInOut>
+            {
+                new ClockInOut
+                {
+                    UserId = 1,
+                    Date = new DateTime(2020, DateTime.UtcNow.Month, 19, 9, 10, 0),
+                    Type = ClockType.In
+                },
+            };
+            List<ClockInOut> dataOut = new List<ClockInOut>
+            {
+                new ClockInOut
+                {
+                    UserId = 1,
+                    Date = new DateTime(2020, DateTime.UtcNow.Month, 19, 11, 20, 0),
+                    Type = ClockType.Out
+                }
+            };
+
+            BalanceDto result = CountBalance.CountWorkTimeCurrent(dataIn, dataOut);
+
+            result.HoursWorked.Should().Be(2);
+            result.MinutesWorked.Should().Be(10);
+
+        }
+        [Fact]
+        public void CloseCurrentDayToCalculateBalance()
+        {
+            List<ClockInOut> dataIn = new List<ClockInOut>
+            {
+                new ClockInOut
+                {
+                    UserId = 1,
+                    Date = new DateTime(2020, DateTime.UtcNow.Month, 19, 9, 10, 0),
+                    Type = ClockType.In
+                },
+            };
+            List<ClockInOut> dataOut = new List<ClockInOut>();
+
+
+            BalanceDto result = CountBalance.CountWorkTimeCurrent(dataIn, dataOut);
+
+            dataIn.Count.Should().Equals(dataOut.Count);
+
+        }
     }
 }
