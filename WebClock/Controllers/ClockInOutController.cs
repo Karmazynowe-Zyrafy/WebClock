@@ -24,9 +24,13 @@ namespace WebClock.Controllers
         [Route("ClockIn/{id}")]
         public void ClockIn(int id)
         {
-            var clockInOut = CreateClockInForId(id);
-
-            _repository.Write(clockInOut);
+            var records = _repository.Read(id).OrderByDescending(x => x.Date);
+            var lastRecord = records.First();
+            if (lastRecord.Type != ClockType.In)
+            {
+                var clockInOut = CreateClockInForId(id);
+                _repository.Write(clockInOut);
+            }
         }
         private static ClockInOut CreateClockInForId(int id)
         {
@@ -43,9 +47,13 @@ namespace WebClock.Controllers
         [Route("ClockOut/{id}")]
         public void ClockOut(int id)
         {
-            var clockInOut = CreateClockOutForId(id);
-
-            _repository.Write(clockInOut);
+            var records = _repository.Read(id).OrderByDescending(x=>x.Date);
+            var lastRecord = records.First();
+            if (lastRecord.Type != ClockType.Out)
+            {
+                var clockInOut = CreateClockOutForId(id);
+                _repository.Write(clockInOut);
+            }
         }
         private static ClockInOut CreateClockOutForId(int id)
         {
