@@ -196,3 +196,5 @@ baseline.json
 
 *.testlog
 /.vs/ProjectSettings.json
+
+/.vs/slnx.sqlite
