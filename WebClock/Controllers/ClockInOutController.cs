@@ -11,12 +11,10 @@ namespace WebClock.Controllers
     public class ClockInOutController : ControllerBase
     {
         private readonly IRepository _repository;
-        private readonly ClockInOutRepository _clockInOutRepository;
 
         public ClockInOutController(IRepository repository)
         {
             _repository = repository;
-            _clockInOutRepository = new ClockInOutRepository(_repository);
         }
 
         // POST: api/ClockInOut/ClockIn/5
@@ -61,8 +59,9 @@ namespace WebClock.Controllers
         [Route("Balance/{id}")]
         public BalanceDto Balance(int id)
         {
-            var datesIn = _clockInOutRepository.GetClockInsForThisMonth(id).ToList();
-            var datesOut = _clockInOutRepository.GetClockOutsForThisMonth(id).ToList();
+            var clockInOutRepository = new ClockInOutRepository(_repository);
+            var datesIn = clockInOutRepository.GetClockInsForThisMonth(id).ToList();
+            var datesOut = clockInOutRepository.GetClockOutsForThisMonth(id).ToList();
 
             return CountBalance.CountWorkTime(datesIn, datesOut);
         }

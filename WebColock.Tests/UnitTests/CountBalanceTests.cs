@@ -8,7 +8,7 @@ using Xunit;
 
 namespace WebColock.Tests.UnitTests
 {
-    public class ClockInOutControllerTests
+    public class CountBalanceTests
     {
         // A - Wchodzi/wychodzi dzisiaj
         // B - Wchodzi dzisiaj, wychodzi jutro
