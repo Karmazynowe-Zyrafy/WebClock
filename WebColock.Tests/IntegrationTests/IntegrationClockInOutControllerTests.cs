@@ -21,6 +21,8 @@ namespace WebColock.Tests.IntegrationTest
         {
             var server = new ServerSut();
             var userId = 1;
+            await server
+                .DoPost<object>($"api/ClockInOut/ClockIn/{userId}", new object());
 
             await server
                 .DoPost<object>($"api/ClockInOut/ClockOut/{userId}", new object());
