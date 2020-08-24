@@ -43,5 +43,32 @@ namespace WebColock.Tests.UnitTests.MemoryRepositoryTests
             result.Select(x => x.Type).FirstOrDefault().Should().Be(ClockType.In);
             result.Select(x => x.Date).FirstOrDefault().Should().Be(date);
         }
+        [Fact]
+        public void ReadLast_WhenCalled_ReturnClockInOutObject()
+        {
+            var memoryRepository = new MemoryRepository();
+            var date = DateTime.Now;
+            var clockInOut = new ClockInOut
+            {
+                UserId = 1,
+                Date = date,
+                Type = ClockType.In
+            };
+            var clockInOutLast = new ClockInOut
+            {
+                UserId = 1,
+                Date = date,
+                Type = ClockType.Out
+            };
+            memoryRepository.Write(clockInOut);
+            memoryRepository.Write(clockInOut);
+            memoryRepository.Write(clockInOutLast);
+
+            var result1 = memoryRepository.ReadLast(1);
+            var result2 = memoryRepository.ReadLast(2);
+            result1.Should().NotBeNull();
+            result1.Type.Should().Equals(ClockType.Out);
+            result2.Should().BeNull();
+        }
     }
 }
