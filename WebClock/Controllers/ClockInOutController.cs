@@ -26,6 +26,7 @@ namespace WebClock.Controllers
 
             _repository.Write(clockInOut);
         }
+
         private static ClockInOut CreateClockInForId(int id)
         {
             return new ClockInOut
@@ -45,6 +46,7 @@ namespace WebClock.Controllers
 
             _repository.Write(clockInOut);
         }
+
         private static ClockInOut CreateClockOutForId(int id)
         {
             return new ClockInOut
@@ -64,6 +66,13 @@ namespace WebClock.Controllers
             var datesOut = clockInOutRepository.GetClockOutsForThisMonth(id).ToList();
 
             return CountBalance.CountWorkTime(datesIn, datesOut);
+        }
+
+        [HttpGet]
+        [Route("history/{id}")]
+        public ClockInOut ReadHistory(int id)
+        {
+            return new ClockInOut();
         }
     }
 }

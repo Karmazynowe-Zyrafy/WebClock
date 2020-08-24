@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using WebClock.Controllers.Dtos;
+using WebClock.Models;
 using Xunit;
 
 namespace WebColock.Tests.IntegrationTests
@@ -40,6 +41,13 @@ namespace WebColock.Tests.IntegrationTests
             result.MinutesWorked.Should().NotBe(null);
             result.HoursLeft.Should().NotBe(null);
             result.MinutesLeft.Should().NotBe(null);
+        }
+
+        [Fact]
+        public async void History_WhenCalled_ReturnListClockInOut()
+        {
+            var result = await _server.DoGet<ClockInOut>("history/{id}");
+            result.Should().NotBeNull();
         }
     }
 }
