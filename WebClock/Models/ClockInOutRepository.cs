@@ -28,5 +28,11 @@ namespace WebClock.Models
                 .Where(x => x.Type == ClockType.Out)
                 .Where(date => date.Date.Month == DateTime.Now.Month);
         }
+
+        public IEnumerable<ClockInOut> GetClockOutsForAllTimeById(int id)
+        {
+            return _repository
+                .Read(id);
+        }
     }
 }

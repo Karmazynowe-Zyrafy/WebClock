@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebClock.Controllers.Dtos;
@@ -69,10 +70,12 @@ namespace WebClock.Controllers
         }
 
         [HttpGet]
-        [Route("history/{id}")]
-        public ClockInOut ReadHistory(int id)
+        [Route("History/{id}")]
+        public IEnumerable<ClockInOut> ReadHistoryById(int id)
         {
-            return new ClockInOut();
+            var clockInOutRepository = new ClockInOutRepository(_repository);
+            var clockInOutHistory = clockInOutRepository.GetClockOutsForAllTimeById(id);
+            return clockInOutHistory;
         }
     }
 }
