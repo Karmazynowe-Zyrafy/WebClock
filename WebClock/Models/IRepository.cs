@@ -6,5 +6,6 @@ namespace WebClock.Models
     {
         void Write(ClockInOut clockInOut);
         List<ClockInOut> Read(int id);
+        ClockInOut ReadLast(int id);
     }
 }
