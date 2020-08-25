@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using WebClock.Controllers.Dtos;
 using Xunit;
+
 namespace WebColock.Tests.IntegrationTest
 {
     public class IntegrationClockInOutControllerTests
