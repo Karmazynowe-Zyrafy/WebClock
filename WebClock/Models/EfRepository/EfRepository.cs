@@ -26,12 +26,8 @@ namespace WebClock.Models.EfRepository
         }
         public ClockInOut ReadLast(int id)
         {
-            var clocksInOut= _context.ClocksInOut.Where(x => x.UserId == id).OrderByDescending(x => x.Date).ToList();
-            if(clocksInOut.Count==0)
-            {
-                return null;
-            }
-            return clocksInOut.First().MapFromDb();
+            var lastClockInOut = _context.ClocksInOut.Where(x => x.UserId == id).OrderByDescending(x => x.Date).FirstOrDefault();
+            return lastClockInOut?.MapFromDb();
         }
     }
 
