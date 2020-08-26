@@ -27,6 +27,8 @@ namespace WebClock
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                     builder => { builder.WithOrigins("http://localhost:4200"); });
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    builder => { builder.WithOrigins("https://clkocindevops.azurewebsites.net"); });
             });
             services.AddControllers();
 
@@ -35,7 +37,8 @@ namespace WebClock
 
         protected virtual void SetupRepository(IServiceCollection services)
         {
-            services.AddDbContext<ClockInOutContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
+            services.AddDbContext<ClockInOutContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
             services.AddScoped(typeof(IRepository), typeof(EfRepository));
         }
 
