@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using WebClock.Controllers.Dtos;
 using WebClock.Models;
@@ -14,9 +15,9 @@ namespace WebColock.Tests.IntegrationTest
         [Fact]
         public async void ClockIn_Test()
         {
-            await _server
+            var post = await _server
                 .DoPost<object>($"api/ClockInOut/ClockIn/{_userId}", new object());
-            //todo usunąć <object>
+            post.Should().BeOfType(typeof(DateTime));
         }
 
         [Fact]
@@ -24,11 +25,13 @@ namespace WebColock.Tests.IntegrationTest
         {
             var server = new ServerSut();
             var userId = 1;
-            await server
+            var post1 = await server
                 .DoPost<object>($"api/ClockInOut/ClockIn/{userId}", new object());
 
-            await server
+            var post2 = await server
                 .DoPost<object>($"api/ClockInOut/ClockOut/{userId}", new object());
+            post1.Should().BeOfType(typeof(DateTime));
+            post2.Should().BeOfType(typeof(DateTime));
         }
 
         [Fact]
