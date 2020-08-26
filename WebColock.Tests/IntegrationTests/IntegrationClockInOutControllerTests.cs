@@ -53,11 +53,11 @@ namespace WebColock.Tests.IntegrationTest
         public async void History_WhenCalled_ReturnListClockInOut()
         {
             await _server
-                .DoPost<object>($"api/ClockInOut/ClockIn/{UserId}", new object());
+                .DoPost<object>($"api/ClockInOut/ClockIn/{_userId}", new object());
 
             await _server
-                .DoPost<object>($"api/ClockInOut/ClockOut/{UserId}", new object());
-            var result = await _server.DoGet<List<ClockInOut>>($"api/ClockInOut/History/{UserId}");
+                .DoPost<object>($"api/ClockInOut/ClockOut/{_userId}", new object());
+            var result = await _server.DoGet<List<ClockInOut>>($"api/ClockInOut/History/{_userId}");
             result.Should().NotBeNull();
         }
     }
