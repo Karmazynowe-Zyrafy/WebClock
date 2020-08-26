@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WebClock.Controllers.Dtos;
@@ -84,6 +85,15 @@ namespace WebClock.Controllers
             var datesOut = clockInOutRepository.GetClockOutsForThisMonth(id).ToList();
 
             return CountBalance.CountWorkTimeCurrent(datesIn, datesOut);
+        }
+
+        [HttpGet]
+        [Route("History/{id}")]
+        public IEnumerable<ClockInOut> ReadHistoryById(int id)
+        {
+            var clockInOutRepository = new ClockInOutRepository(_repository);
+            var clockInOutHistory = clockInOutRepository.GetClockOutsForAllTimeById(id);
+            return clockInOutHistory;
         }
     }
 }
