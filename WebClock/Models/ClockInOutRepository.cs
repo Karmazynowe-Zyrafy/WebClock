@@ -31,8 +31,7 @@ namespace WebClock.Models
 
         public IEnumerable<ClockInOut> GetClockOutsForAllTimeById(int id)
         {
-            return _repository
-                .Read(id);
+            return _repository.Read(id);
         }
     }
 }
