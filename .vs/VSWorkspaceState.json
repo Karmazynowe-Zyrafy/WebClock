@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\WebClock",
-    "\\WebClock\\Controllers"
+    "\\WebClock\\Controllers",
+    "\\WebColock.Tests",
+    "\\WebColock.Tests\\IntegrationTests",
+    "\\WebColock.Tests\\UnitTests"
   ],
   "SelectedNode": "\\WebClock.sln",
   "PreviewInSolutionExplorer": false

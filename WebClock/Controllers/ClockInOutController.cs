@@ -21,13 +21,17 @@ namespace WebClock.Controllers
         // POST: api/ClockInOut/ClockIn/5
         [HttpPost]
         [Route("ClockIn/{id}")]
-        public void ClockIn(int id)
+        public ActionResult ClockIn(int id)
         {
-            var clockInOut = CreateClockInForId(id);
-
-            _repository.Write(clockInOut);
+            var lastRecord = _repository.ReadLast(id);
+            if ((lastRecord is null) || lastRecord.Type != ClockType.In)
+            {
+                var clockInOut = CreateClockInForId(id);
+                _repository.Write(clockInOut);
+                return Ok();
+            }
+            return Conflict();
         }
-
         private static ClockInOut CreateClockInForId(int id)
         {
             return new ClockInOut
@@ -41,13 +45,17 @@ namespace WebClock.Controllers
         // POST: api/ClockInOut/ClockOut/5
         [HttpPost]
         [Route("ClockOut/{id}")]
-        public void ClockOut(int id)
+        public ActionResult ClockOut(int id)
         {
-            var clockInOut = CreateClockOutForId(id);
-
-            _repository.Write(clockInOut);
+            var lastRecord = _repository.ReadLast(id);
+            if (!(lastRecord is null) && lastRecord.Type != ClockType.Out)
+            {
+                var clockInOut = CreateClockOutForId(id);
+                _repository.Write(clockInOut);
+                return Ok();
+            }
+            return Conflict();
         }
-
         private static ClockInOut CreateClockOutForId(int id)
         {
             return new ClockInOut
@@ -67,6 +75,16 @@ namespace WebClock.Controllers
             var datesOut = clockInOutRepository.GetClockOutsForThisMonth(id).ToList();
 
             return CountBalance.CountWorkTime(datesIn, datesOut);
+        }
+        [HttpGet]
+        [Route("BalanceToThisDay/{id}")]
+        public BalanceDto BalanceToThisDay(int id)
+        {
+            var clockInOutRepository = new ClockInOutRepository(_repository);
+            var datesIn = clockInOutRepository.GetClockInsForThisMonth(id).ToList();
+            var datesOut = clockInOutRepository.GetClockOutsForThisMonth(id).ToList();
+
+            return CountBalance.CountWorkTimeCurrent(datesIn, datesOut);
         }
 
         [HttpGet]
