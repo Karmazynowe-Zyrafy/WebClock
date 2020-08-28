@@ -26,9 +26,8 @@ namespace WebClock
             services.AddCors(options =>
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
-                    builder => { builder.WithOrigins("http://localhost:4200"); });
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                    builder => { builder.WithOrigins("https://clkocindevops.azurewebsites.net"); });
+                    builder => { builder.WithOrigins("http://localhost:4200", "https://clkocindevops.azurewebsites.net"); });
+               
             });
             services.AddControllers();
 
