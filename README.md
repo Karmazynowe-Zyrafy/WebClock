@@ -30,6 +30,9 @@
 ### Features
 
 -Clocking in/out
+
 -Checking amount of hours worked this month
+
 -Checking your entire history of work shifts
+
 
