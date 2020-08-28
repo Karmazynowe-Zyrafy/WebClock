@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 using WebClock.Controllers.Dtos;
 using WebClock.Models;
 using Xunit;
@@ -67,6 +68,19 @@ namespace WebColock.Tests.IntegrationTest
             result[1].UserId.Should().Be(_userId);
             result[0].Type.Should().Be(1);
             result[1].Type.Should().Be(0);
+        }
+
+        [Fact]
+        public async void Status_WhenCalled_ReturnWorkStatus()
+        {
+            await _server
+                .DoPost<object>($"api/ClockInOut/ClockIn/{_userId}", new object());
+
+            await _server
+                .DoPost<object>($"api/ClockInOut/ClockOut/{_userId}", new object());
+            var status= await _server.DoGet<string>($"api/ClockInOut/WorkStatus/{_userId}");
+            status.Should().NotBeNull();
+
         }
     }
 }
