@@ -95,5 +95,21 @@ namespace WebClock.Controllers
             var clockInOutHistory = clockInOutRepository.GetClockOutsForAllTimeById(id);
             return clockInOutHistory;
         }
+
+        // GET: api/ClockInOut/LastClockInTime/5
+        [HttpGet]
+        [Route("LastClockInTime/{id}")]
+        public ActionResult LastClockInTime(int id)
+        {
+            var lastRecord = _repository.ReadLast(id);
+            if (lastRecord?.Type == ClockType.In)
+            {
+                return Ok(lastRecord.Date);
+            }
+            else
+            {
+                return Ok();
+            }
+        }
     }
 }
