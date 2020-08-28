@@ -28,10 +28,12 @@ namespace WebClock.Controllers
             {
                 var clockInOut = CreateClockInForId(id);
                 _repository.Write(clockInOut);
-                return Ok();
+                return Ok(clockInOut.Date);
             }
+
             return Conflict();
         }
+
         private static ClockInOut CreateClockInForId(int id)
         {
             return new ClockInOut
@@ -52,10 +54,12 @@ namespace WebClock.Controllers
             {
                 var clockInOut = CreateClockOutForId(id);
                 _repository.Write(clockInOut);
-                return Ok();
+                return Ok(clockInOut.Date);
             }
+
             return Conflict();
         }
+
         private static ClockInOut CreateClockOutForId(int id)
         {
             return new ClockInOut
@@ -76,6 +80,7 @@ namespace WebClock.Controllers
 
             return CountBalance.CountWorkTime(datesIn, datesOut);
         }
+
         [HttpGet]
         [Route("BalanceToThisDay/{id}")]
         public BalanceDto BalanceToThisDay(int id)
@@ -94,6 +99,22 @@ namespace WebClock.Controllers
             var clockInOutRepository = new ClockInOutRepository(_repository);
             var clockInOutHistory = clockInOutRepository.GetClockOutsForAllTimeById(id);
             return clockInOutHistory;
+        }
+
+        // GET: api/ClockInOut/LastClockInTime/5
+        [HttpGet]
+        [Route("LastClockInTime/{id}")]
+        public ActionResult LastClockInTime(int id)
+        {
+            var lastRecord = _repository.ReadLast(id);
+            if (lastRecord?.Type == ClockType.In)
+            {
+                return Ok(lastRecord.Date);
+            }
+            else
+            {
+                return Ok();
+            }
         }
     }
 }
