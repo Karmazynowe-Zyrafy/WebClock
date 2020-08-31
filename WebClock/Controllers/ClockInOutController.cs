@@ -77,10 +77,15 @@ namespace WebClock.Controllers
             var clockInOutRepository = new ClockInOutRepository(_repository);
             var datesIn = clockInOutRepository.GetClockInsForThisMonth(id).ToList();
             var datesOut = clockInOutRepository.GetClockOutsForThisMonth(id).ToList();
-            if (datesIn.Count > datesOut.Count)
+
+
+            var lastRecord = _repository.ReadLast(id);
+            if (lastRecord?.Type == ClockType.In)
             {
                 datesIn.RemoveAt(datesIn.Count - 1);
             }
+
+
             return CountBalance.CountWorkTime(datesIn, datesOut);
         }
 

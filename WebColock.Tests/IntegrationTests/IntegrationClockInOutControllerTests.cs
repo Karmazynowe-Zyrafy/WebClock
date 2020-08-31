@@ -53,6 +53,21 @@ namespace WebColock.Tests.IntegrationTest
         }
 
         [Fact]
+        public async void Balance_IfLastIsClockIn_ReturnWithoutLastClockInElement()
+        {
+            await _server
+                .DoPost<object>($"api/ClockInOut/ClockIn/{_userId}", new object());
+
+            var result = await _server
+                .DoGet<BalanceDto>($"api/ClockInOut/Balance/{_userId}");
+
+            result.HoursWorked.Should().NotBe(null);
+            result.MinutesWorked.Should().NotBe(null);
+            result.HoursLeft.Should().NotBe(null);
+            result.MinutesLeft.Should().NotBe(null);
+        }
+
+        [Fact]
         public async void History_WhenCalled_ReturnListClockInOut()
         {
             await _server
