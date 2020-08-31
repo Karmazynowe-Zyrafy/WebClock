@@ -128,5 +128,13 @@ namespace WebClock.Controllers
                 return Ok();
             }
         }
+        // GET: api/ClockInOut/WorkStatus/5
+        [HttpGet]
+        [Route("WorkStatus/{id}")]
+        public ActionResult WorkStatus(int id)
+        {
+            var lastRecord = _repository.ReadLast(id);
+            return Ok(lastRecord.Type);
+        }
     }
 }

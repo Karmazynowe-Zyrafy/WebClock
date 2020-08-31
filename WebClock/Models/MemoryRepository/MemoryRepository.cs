@@ -36,7 +36,9 @@ namespace WebClock.Models.MemoryRepository
         }
         public ClockInOut ReadLast(int id)
         {
-            var clocksInOut = ClocksInOut.Where(x => x.UserId == id).OrderByDescending(x => x.Date).ToList();
+            var clocksInOut = ClocksInOut
+                .Where(x => x.UserId == id)
+                .OrderByDescending(x => x.Date).ToList();
             if (clocksInOut.Count == 0)
             {
                 return null;
